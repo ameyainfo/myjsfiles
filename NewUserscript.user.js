@@ -34,7 +34,21 @@ var classIndex = 1;
         newHTML += '<b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b>';
         newHTML += str.substring(str.indexOf("Timezone"));
 
-
+        if(dt == '19')
+        {
+        
+        }
+        else
+        {
+            if(parseInt(dt, 10) % 2) == 1)
+            {
+                classIndex = 0;
+            }
+            else
+            {
+                classIndex = 1;
+            }
+        }
 
         document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('td')[0].innerHTML = newHTML;
 
