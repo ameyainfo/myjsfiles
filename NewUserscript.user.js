@@ -40,7 +40,7 @@ var classIndex = 1;
         }
         else
         {
-            if(parseInt(dt, 10) % 2) == 1)
+            if(parseInt(dt, 10) % 2 == 1)
             {
                 classIndex = 0;
             }
