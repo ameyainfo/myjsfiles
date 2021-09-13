@@ -33,14 +33,17 @@ var classIndex = 1;
         var newHTML = str.slice(0, str.indexOf(":") + 1);
         newHTML += '<b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b>';
         newHTML += str.substring(str.indexOf("Timezone"));
+        
+        var dte = new Date();
+        var day = dte.getDate();
 
-        if(dt == '19')
+        if(day.toString() == '19')
         {
         
         }
         else
         {
-            if(parseInt(dt, 10) % 2 == 1)
+            if(parseInt(day, 10) % 2 == 1)
             {
                 classIndex = 0;
             }
