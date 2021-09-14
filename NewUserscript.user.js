@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      1.10
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -27,8 +27,20 @@ var classIndex = 1;
         var day = dte.getDate();
 
         var dt = str.slice(str.indexOf('<br>') - 2, str.indexOf('<br>'));
-        msg = day.toString() + "th, ";
+        
+        for(var i = 0; i < array.length; i++)
+        {
+            if(array[i][0] == parseInt(dt, 10))
+            {
+                if(array[i][0] == day || array[i][1] == day)
+                {
+                    dt = day.toString();
+                }
+            }
+        }
 
+        msg = dt.toString() + "th, ";
+        
         var hr = str.substr(str.indexOf('<br>') + 4, 2);
         msg += (parseInt(hr, 10) > 17) ? 'Evening' : 'Morning';
         msg += ', '; 
