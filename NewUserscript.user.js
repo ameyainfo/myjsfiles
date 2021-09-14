@@ -13,7 +13,7 @@ var myInt;
 var msg = '';
 var classIndex = 1;
 (function() {
-    'use strict';
+    'use strict'; 
 
     document.getElementById('searchType0').checked = true;
     document.getElementById('email').focus();
