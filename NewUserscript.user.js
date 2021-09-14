@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.11
+// @version      1.12
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -31,7 +31,7 @@ var array = [
         var str = document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('td')[0].innerHTML;
         
         var dte = new Date();
-        var day = dte.getDate();
+        var day = dte.getDate(); 
 
         var dt = str.slice(str.indexOf('<br>') - 2, str.indexOf('<br>'));
         
