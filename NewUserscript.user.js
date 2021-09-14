@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.7
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -22,21 +22,21 @@ var classIndex = 1;
     if(document.getElementById('iecsouser').style.display == '' || document.getElementById('iecsouser').style.display == 'block')
     {
         var str = document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('td')[0].innerHTML;
+        
+        var dte = new Date();
+        var day = dte.getDate();
 
         var dt = str.slice(str.indexOf('<br>') - 2, str.indexOf('<br>'));
-        msg = dt + "th, ";
+        msg = day.toString() + "th, ";
 
         var hr = str.substr(str.indexOf('<br>') + 4, 2);
         msg += (parseInt(hr, 10) > 17) ? 'Evening' : 'Morning';
         msg += ', '; 
 
         var newHTML = str.slice(0, str.indexOf(":") + 1);
-        newHTML += '<font style="color:red;font-size:20px;"><b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b></font>';
+        newHTML += '<font style="color:red;font-size:15px;"><b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b></font>';
         newHTML += str.substring(str.indexOf("Timezone"));
         
-        var dte = new Date();
-        var day = dte.getDate();
-
         if(day.toString() == '19')
         {
         
@@ -65,6 +65,9 @@ function myFunc()
 {
     if(document.getElementById('attndInfo').style.display == '' || document.getElementById('attndInfo').style.display == 'block')
     {
+        var className1 = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex - 1].getElementsByTagName('h4')[0].innerHTML;
+        var status1 = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex - 1].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 2].innerHTML.replace('&nbsp;', '');
+        
         var className = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex].getElementsByTagName('h4')[0].innerHTML;
         var status = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 2].innerHTML.replace('&nbsp;', '');
         var secs = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 1].innerHTML.replace('&nbsp;', '');
@@ -74,9 +77,9 @@ function myFunc()
         var min = d.getMinutes();
         var time = (hrs.toString().length == 1 ? '0' + hrs.toString() : hrs) + ':' + (min.toString().length == 1 ? '0' + min.toString() : min);
 
-
-        msg += 'Class: ' + className + ', ';
-        msg += 'Status: ' + status + ', ';
+        msg += className + status + ', ';
+        msg += className + status + ', ';
+        //msg += 'Status: ' + status + ', ';
         msg += 'Secs: ' + secs + ' @ ' + time;
 
         GM_setClipboard (msg);
