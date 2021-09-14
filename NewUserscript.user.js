@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.4.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -53,9 +53,9 @@ var classIndex = 1;
             }
         }
 
-        document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('td')[0].innerHTML = newHTML;
+        document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('td')[0].innerHTML = newHTML;
 
-        document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('ul')[1].getElementsByTagName('a')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('ul')[1].getElementsByTagName('a').length - 1].click();
+        document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('ul')[1].getElementsByTagName('a')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('ul')[1].getElementsByTagName('a').length - 1].click();
 
         myInt = setInterval(myFunc, 1000);
     }
