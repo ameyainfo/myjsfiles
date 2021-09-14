@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.6
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -31,7 +31,7 @@ var classIndex = 1;
         msg += ', '; 
 
         var newHTML = str.slice(0, str.indexOf(":") + 1);
-        newHTML += '<b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b>';
+        newHTML += '<font style="color:red;font-size:20px;"><b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b></font>';
         newHTML += str.substring(str.indexOf("Timezone"));
         
         var dte = new Date();
