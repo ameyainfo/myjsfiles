@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.8
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -77,8 +77,8 @@ function myFunc()
         var min = d.getMinutes();
         var time = (hrs.toString().length == 1 ? '0' + hrs.toString() : hrs) + ':' + (min.toString().length == 1 ? '0' + min.toString() : min);
 
-        msg += className + status + ', ';
-        msg += className + status + ', ';
+        msg += className1 + ' - ' + status1 + ', ';
+        msg += className + ' - ' + status + ', ';
         //msg += 'Status: ' + status + ', ';
         msg += 'Secs: ' + secs + ' @ ' + time;
 
