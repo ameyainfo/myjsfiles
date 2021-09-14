@@ -46,7 +46,7 @@ var array = [
             }
         }
 
-        msg = dt.toString() + "th, ";
+        msg = dt.toString() + "th, "; 
         
         var hr = str.substr(str.indexOf('<br>') + 4, 2);
         msg += (parseInt(hr, 10) > 17) ? 'Evening' : 'Morning';
