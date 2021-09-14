@@ -21,7 +21,7 @@ var classIndex = 1;
 
     if(document.getElementById('iecsouser').style.display == '' || document.getElementById('iecsouser').style.display == 'block')
     {
-        var str = document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('td')[0].innerHTML;
+        var str = document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('td')[0].innerHTML;
 
         var dt = str.slice(str.indexOf('<br>') - 2, str.indexOf('<br>'));
         msg = dt + "th, ";
