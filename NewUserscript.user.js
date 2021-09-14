@@ -39,7 +39,7 @@ var classIndex = 1;
         
         if(day.toString() == '19')
         {
-        
+            console.log('Shambho');
         }
         else
         {
