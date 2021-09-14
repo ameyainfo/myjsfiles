@@ -2,7 +2,7 @@
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
 // @version      1.12
-// @description  try to take over the world!
+// @description  this is IEO Admin script 
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
 // @icon         https://www.google.com/s2/favicons?domain=google.com
