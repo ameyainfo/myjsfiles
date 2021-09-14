@@ -28,7 +28,7 @@ var classIndex = 1;
 
         var hr = str.substr(str.indexOf('<br>') + 4, 2);
         msg += (parseInt(hr, 10) > 17) ? 'Evening' : 'Morning';
-        msg += ', ';
+        msg += ', '; 
 
         var newHTML = str.slice(0, str.indexOf(":") + 1);
         newHTML += '<b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b>';
