@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.10
+// @version      1.11
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -12,6 +12,13 @@
 var myInt;
 var msg = '';
 var classIndex = 1;
+
+var array = [
+    [13, 14],
+    [15, 16],
+    [17, 18]
+];
+
 (function() {
     'use strict'; 
 
