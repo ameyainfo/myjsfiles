@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.13
+// @version      1.14
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -12,6 +12,7 @@
 var myInt;
 var msg = '';
 var classIndex = 1;
+var CurrClassIndex = 0;
 
 var array = [
     [13, 14],
@@ -64,11 +65,11 @@ var array = [
         {
             if(parseInt(day, 10) % 2 == 1)
             {
-                //classIndex = 0;
+                CurrClassIndex = 0;
             }
             else
             {
-                //classIndex = 1;
+                CurrClassIndex = 1;
             }
         }
 
@@ -95,7 +96,7 @@ function myFunc()
 
             var className = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex].getElementsByTagName('h4')[0].innerHTML;
             var status = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 2].innerHTML.replace('&nbsp;', '');
-            var secs = document.getElementById('attndInfo').getElementsByTagName('div')[classIndex].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 1].innerHTML.replace('&nbsp;', '');
+            var secs = document.getElementById('attndInfo').getElementsByTagName('div')[CurrClassIndex].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 1].innerHTML.replace('&nbsp;', '');
 
             var d = new Date();
             var hrs = d.getHours();
