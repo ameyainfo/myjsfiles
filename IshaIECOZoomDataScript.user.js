@@ -20,12 +20,12 @@ var msg = '';
 
     if(document.getElementById('iecsouser').style.display == '' || document.getElementById('iecsouser').style.display == 'block')
     {
-        msg += $('#iecsouser .dl-horizontal dd')[1].innerHTML.replace('&nbsp;', '') + ', ';
-        msg += $('#iecsouser .dl-horizontal dd')[2].innerHTML.replace('&nbsp;', '') + ', ';
+        //msg += $('#iecsouser .dl-horizontal dd')[1].innerHTML.replace('&nbsp;', '') + ', ';
+        //msg += $('#iecsouser .dl-horizontal dd')[2].innerHTML.replace('&nbsp;', '') + ', ';
         msg += $('#iecsouser .dl-horizontal dd')[4].innerHTML.replace('&nbsp;', '') + ', ';
-        msg += $('#iecsouser .dl-horizontal dd')[5].innerHTML.replace('&nbsp;', '') + ', ';
+        //msg += $('#iecsouser .dl-horizontal dd')[5].innerHTML.replace('&nbsp;', '') + ', ';
 
-        msg += $('#sample_2 tr:last td:nth-child(6)').text();
+        //msg += $('#sample_2 tr:last td:nth-child(6)').text();
 
         GM_setClipboard (msg);
         alert('Message copied!!!');
