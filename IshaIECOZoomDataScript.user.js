@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Zoom Script
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  this is IEO Admin script (zoom link)
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -20,12 +20,12 @@ var msg = '';
 
     if(document.getElementById('iecsouser').style.display == '' || document.getElementById('iecsouser').style.display == 'block')
     {
-        msg += $('#iecsouser .dl-horizontal dt')[1].innerHTML.replace('&nbsp;', '') + ": " + $('#iecsouser .dl-horizontal dd')[1].innerHTML.replace('&nbsp;', '') + ', ';
-        msg += $('#iecsouser .dl-horizontal dt')[2].innerHTML.replace('&nbsp;', '') + ": " + $('#iecsouser .dl-horizontal dd')[2].innerHTML.replace('&nbsp;', '') + ', ';
-        msg += $('#iecsouser .dl-horizontal dt')[4].innerHTML.replace('&nbsp;', '') + ": " + $('#iecsouser .dl-horizontal dd')[4].innerHTML.replace('&nbsp;', '') + ', ';
-        msg += $('#iecsouser .dl-horizontal dt')[5].innerHTML.replace('&nbsp;', '') + ": " + $('#iecsouser .dl-horizontal dd')[5].innerHTML.replace('&nbsp;', '') + ', ';
+        msg += $('#iecsouser .dl-horizontal dd')[1].innerHTML.replace('&nbsp;', '') + ', ';
+        msg += $('#iecsouser .dl-horizontal dd')[2].innerHTML.replace('&nbsp;', '') + ', ';
+        msg += $('#iecsouser .dl-horizontal dd')[4].innerHTML.replace('&nbsp;', '') + ', ';
+        msg += $('#iecsouser .dl-horizontal dd')[5].innerHTML.replace('&nbsp;', '') + ', ';
 
-        msg += "Roll No.: " + $('#sample_2 tr:last td:nth-child(6)').text();
+        msg += $('#sample_2 tr:last td:nth-child(6)').text();
 
         GM_setClipboard (msg);
         alert('Message copied!!!');
