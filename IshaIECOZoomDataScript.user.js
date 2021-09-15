@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Zoom Script
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  this is IEO Admin script (zoom link)
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
