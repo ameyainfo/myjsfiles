@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.14
+// @version      1.15
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -83,7 +83,9 @@ var array = [
 
 function myFunc()
 {
-    if(document.getElementById('attndInfo').style.display == '' || document.getElementById('attndInfo').style.display == 'block')
+    //if(document.getElementById('attndInfo').style.display == '' || document.getElementById('attndInfo').style.display == 'block')
+    if((document.getElementById('attndInfo').style.display == '' || document.getElementById('attndInfo').style.display == 'block') &&
+       document.getElementById('attndInfo').getElementsByTagName('div')[classIndex - 1].getElementsByTagName('h4')[0].innerHTML != 'undefined')
     {
         try
         {
