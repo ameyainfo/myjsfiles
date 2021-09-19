@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.16
+// @version      1.17
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -15,8 +15,8 @@ var msg = '="';
 var msgTemp = '';
 var classIndex = 1;
 var CurrClassIndex = 0;
-var iniClass3Date = new Date(2021, 9, 19);
-var iniClass3Time = new Date(2021, 9, 19, 9, 30, 0);
+var iniClass3Date = new Date(2021, 8, 19);
+var iniClass3Time = new Date(2021, 8, 19, 9, 30, 0);
 
 var array = [
     [13, 14],
@@ -103,7 +103,8 @@ var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 
 
         document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('td')[0].innerHTML = newHTML;
 
-        document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('ul')[1].getElementsByTagName('a')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('ul')[1].getElementsByTagName('a').length - 1].click();
+        //ocument.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length - 1].getElementsByTagName('ul')[1].getElementsByTagName('a')[document.getElementById('sample_2').getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('ul')[1].getElementsByTagName('a').length - 1].click();
+        $('#sample_2 > tbody:last-child tr:last-child td:last-child ul li:last-child a').click()
 
         myInt = setInterval(myFunc, 1000);
     }
@@ -111,6 +112,7 @@ var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 
 
 function myFunc()
 {
+
     if((document.getElementById('attndInfo').style.display == '' || document.getElementById('attndInfo').style.display == 'block') &&
        document.getElementById('attndInfo').getElementsByTagName('div')[classIndex - 1].getElementsByTagName('h4')[0].innerHTML != 'undefined')
     {
