@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.17
+// @version      1.18
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
+// @match        https://prs.innerengineering.com/ieo/newadmin/iecsomgmt.php
 // @icon         https://www.google.com/s2/favicons?domain=google.com
 // @grant        GM_setClipboard
 // @require https://code.jquery.com/jquery-1.8.3.min.js
