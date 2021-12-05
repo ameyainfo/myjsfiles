@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.18
+// @version      1.19
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -16,13 +16,13 @@ var msg = '="';
 var msgTemp = '';
 var classIndex = 1;
 var CurrClassIndex = 0;
-var iniClass3Date = new Date(2021, 8, 19);
-var iniClass3Time = new Date(2021, 8, 19, 9, 30, 0);
+var iniClass3Date = new Date(2021, 11, 12);
+var iniClass3Time = new Date(2021, 11, 12, 9, 30, 0);
 
 var array = [
-    [13, 14],
-    [15, 16],
-    [17, 18]
+    [6, 7],
+    [8, 9],
+    [10, 11]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -137,13 +137,13 @@ function myFunc()
             var time = (hrs.toString().length == 1 ? '0' + hrs.toString() : hrs) + ':' + (min.toString().length == 1 ? '0' + min.toString() : min);
 
             var classId = $('#attndInfo div:nth-child(1) dd')[0].innerHTML.replace('&nbsp;', '')
-            if(classId == '3191' || classId == '3192' || classId == '3194')// || classId == '3183')
+            if(classId == '3223' || classId == '3224' || classId == '3225')// || classId == '3183')
             {
                 msg += 'Overseas participant, "&CHAR(10)&"';
                 msg += 'Program Id: ' + classId + ', "&CHAR(10)&"';
             }
 
-            if(parseInt(classId, 10) < 3179 || parseInt(classId, 10) > 3194)
+            if(parseInt(classId, 10) < 3209 || parseInt(classId, 10) > 3222)
                 msg += 'Earlier Program Id: ' + classId + ', "&CHAR(10)&"';
 
             msg += msgTemp;
