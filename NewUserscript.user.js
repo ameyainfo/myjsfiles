@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.19
+// @version      1.20
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -18,6 +18,7 @@ var classIndex = 1;
 var CurrClassIndex = 0;
 var iniClass3Date = new Date(2021, 11, 12);
 var iniClass3Time = new Date(2021, 11, 12, 9, 30, 0);
+var dt;
 
 var array = [
     [6, 7],
@@ -56,7 +57,7 @@ var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 
         var mon = parseInt(fullDate.split('-')[1]);
         var yr = parseInt(fullDate.split('-')[0]);
 
-        var dt = str.slice(str.indexOf('<br>') - 2, str.indexOf('<br>'));
+        dt = str.slice(str.indexOf('<br>') - 2, str.indexOf('<br>'));
 
         for(var i = 0; i < array.length; i++)
         {
@@ -151,7 +152,7 @@ function myFunc()
             msg += $('#attndInfo div:nth-child(1) h4').text() + ' - ' + $('#attndInfo div:nth-child(1) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
             msg += $('#attndInfo div:nth-child(2) h4').text() + ' - ' + $('#attndInfo div:nth-child(2) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
 
-            if(new Date() > iniClass3Date || 1 == 1)
+            if(new Date() > iniClass3Date)// || 1 == 1)
             {
                 msg += $('#attndInfo div:nth-child(3) h4').text() + ' - ' + $('#attndInfo div:nth-child(3) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
 
@@ -159,9 +160,34 @@ function myFunc()
                     msg += $('#attndInfo div:nth-child(4) h4').text() + ' - ' + $('#attndInfo div:nth-child(4) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
                 //msg += 'Status: ' + status + ', ';
             }
+            else
+            {
+                var isSet = false;
+                for(var i = 0; i < array.length; i++)
+                {
+                    if(array[i][0] == parseInt(dt, 10))
+                    {
+                        msg += $('#attndInfo div:nth-child(1) h4').text() + ' - ' + $('#attndInfo div:nth-child(1) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
+                        isSet = true;
+                        break;
+                    }
+                    else if(array[i][1] == parseInt(dt, 10))
+                    {
+                        msg += $('#attndInfo div:nth-child(2) h4').text() + ' - ' + $('#attndInfo div:nth-child(2) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
+                        isSet = true;
+                        break;
+                    }
+                }
+
+                if(!isSet)
+                {
+                    alert('3');
+                    msg += $('#attndInfo div:nth-child(3) h4').text() + ' - ' + $('#attndInfo div:nth-child(3) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
+                }
+            }
 
             var secs = '';
-            if(new Date() > iniClass3Date || 1 == 1)
+            if(new Date() > iniClass3Date)// || 1 == 1)
             {
                 if(new Date() > iniClass3Time)
                     secs = $('#attndInfo div:nth-child(4) dd')[3].innerHTML.replace('&nbsp;', '');
@@ -170,7 +196,28 @@ function myFunc()
             }
             else
             {
-                secs = document.getElementById('attndInfo').getElementsByTagName('div')[CurrClassIndex].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 1].innerHTML.replace('&nbsp;', '');
+                var isSet = false;
+                for(var i = 0; i < array.length; i++)
+                {
+                    if(array[i][0] == parseInt(dt, 10))
+                    {
+                        secs = $('#attndInfo div:nth-child(1) dd')[3].innerHTML.replace('&nbsp;', '');
+                        isSet = true;
+                        break;
+                    }
+                    else if(array[i][1] == parseInt(dt, 10))
+                    {
+                        secs = $('#attndInfo div:nth-child(2) dd')[3].innerHTML.replace('&nbsp;', '');
+                        isSet = true;
+                        break;
+                    }
+                }
+
+                if(!isSet)
+                {
+                    secs = $('#attndInfo div:nth-child(3) dd')[3].innerHTML.replace('&nbsp;', '');
+                }
+                //secs = document.getElementById('attndInfo').getElementsByTagName('div')[CurrClassIndex].getElementsByTagName('dd')[document.getElementById('attndInfo').getElementsByTagName('div')[0].getElementsByTagName('dd').length - 1].innerHTML.replace('&nbsp;', '');
             }
 
             if(secs != 'null')
