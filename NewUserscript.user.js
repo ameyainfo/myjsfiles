@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.20
+// @version      1.21
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -199,13 +199,13 @@ function myFunc()
                 var isSet = false;
                 for(var i = 0; i < array.length; i++)
                 {
-                    if(array[i][0] == parseInt(dt, 10))
+                    if(array[i][0] == (new Date()).getDate())
                     {
                         secs = $('#attndInfo div:nth-child(1) dd')[3].innerHTML.replace('&nbsp;', '');
                         isSet = true;
                         break;
                     }
-                    else if(array[i][1] == parseInt(dt, 10))
+                    else if(array[i][1] == (new Date()).getDate())
                     {
                         secs = $('#attndInfo div:nth-child(2) dd')[3].innerHTML.replace('&nbsp;', '');
                         isSet = true;
