@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isha PRS Script
 // @namespace    http://tampermonkey.net/
-// @version      1.21
+// @version      1.22
 // @description  this is IEO Admin script
 // @author       You
 // @match        https://prs.innerengineering.com/ieo/newadmin/iecsoAdminMgmt.php
@@ -87,7 +87,7 @@ var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 
         newHTML += '<font style="color:red;font-size:15px;"><b>' + str.substring(str.indexOf(":") + 1, str.indexOf("Timezone")) + '</b></font>';
         newHTML += str.substring(str.indexOf("Timezone"));
 
-        if(day.toString() == '19')
+        if(day.toString() == '12')
         {
             console.log('Shambho');
         }
@@ -162,7 +162,7 @@ function myFunc()
             }
             else
             {
-                var isSet = false;
+                /*var isSet = false;
                 for(var i = 0; i < array.length; i++)
                 {
                     if(array[i][0] == parseInt(dt, 10))
@@ -177,13 +177,7 @@ function myFunc()
                         isSet = true;
                         break;
                     }
-                }
-
-                if(!isSet)
-                {
-                    alert('3');
-                    msg += $('#attndInfo div:nth-child(3) h4').text() + ' - ' + $('#attndInfo div:nth-child(3) dd')[2].innerHTML.replace('&nbsp;', '') + ', "&CHAR(10)&"';
-                }
+                }*/
             }
 
             var secs = '';
