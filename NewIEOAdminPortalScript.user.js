@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  this is IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -67,7 +67,7 @@ function myFunc(){
             msgTemp += 'Program Id: ' + classId + ', "&CHAR(10)&"';
         }
 
-        if(parseInt(classId, 10) < 3209 || parseInt(classId, 10) > 3225)
+        if(parseInt(classId, 10) < 3288 || parseInt(classId, 10) > 3300)
             msgTemp += 'Earlier Program Id: ' + classId + ', "&CHAR(10)&"';
 
         var mon = parseInt(classDate.split('-')[1]);
