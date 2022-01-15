@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  this is IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -46,6 +46,8 @@ function myFunc(){
     else
         return;
 
+    var rollno = '';
+
     //$('#participant').focus();
 
     //alert($('table tbody tr:first-child td:nth-child(2)').html());
@@ -70,7 +72,7 @@ function myFunc(){
             }
         }
 
-        var msgTemp = '="';
+        var msgTemp = '=SPLIT("';
 
         // if(classId == '3312' || classId == '3327')
         if(parseInt(classId, 10) >= 3312 && parseInt(classId, 10) <= 3327)
@@ -91,12 +93,18 @@ function myFunc(){
 
         //alert(msgTemp);
 
+        //alert($('table tbody tr:first-child td:nth-child(1)').html().trim());
+
+        rollno = $('table tbody tr:first-child td:nth-child(1)').html().trim();
+
         sessionStorage.setItem('clicked', msgTemp);
+        sessionStorage.setItem('rollno', rollno);
         $('table tbody tr:first-child td:last-child a:contains("Session Details")').get(0).click();
     }
     else
     {
         msg = sessionStorage.getItem('clicked');
+        rollno = sessionStorage.getItem('rollno');
 
         var blLast = false;
         var lastSeen = '';
@@ -113,7 +121,9 @@ function myFunc(){
             }
         });
 
-        msg += 'Heartbeat: ' + lastSeen + '"';
+        msg += 'Heartbeat: ' + lastSeen + '^' + rollno + '", "^")';
+
+        //alert(msg);
 
         GM_setClipboard (msg);
         alert('Message copied!!!');
