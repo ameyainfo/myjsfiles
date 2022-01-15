@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  this is IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -13,27 +13,38 @@
 
 var msg = '';
 
-var iniClass3Date = new Date(2021, 11, 12);
-var iniClass3Time = new Date(2021, 11, 12, 9, 30, 0);
+var iniClass3Date = new Date(2022, 0, 23);
+var iniClass3Time = new Date(2022, 0, 23, 9, 30, 0);
 var dt;
 
 var array = [
-    [6, 7],
-    [8, 9],
-    [10, 11]
+    [17, 18],
+    [19, 20],
+    [21, 22]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-waitForKeyElements ("table", myFunc);
+waitForKeyElements (".table-striped", myFunc);
 
+var myInt;
 (function() {
     'use strict';
+
+    myInt = setInterval(myFunc, 1000);
 
     // Your code here...
 })();
 
 function myFunc(){
+    //alert($('table thead tr:first-child th:nth-child(1)').html());
+    if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No.' ||
+      $('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session')
+    {
+        clearInterval(myInt);
+    }
+    else
+        return;
 
     //$('#participant').focus();
 
@@ -61,14 +72,15 @@ function myFunc(){
 
         var msgTemp = '="';
 
-        if(classId == '3223' || classId == '3224' || classId == '3225')
+        // if(classId == '3312' || classId == '3327')
+        if(parseInt(classId, 10) >= 3312 && parseInt(classId, 10) <= 3327)
         {
-            msgTemp += 'Overseas participant, "&CHAR(10)&"';
-            msgTemp += 'Program Id: ' + classId + ', "&CHAR(10)&"';
+            msgTemp += 'February, 2022 - IECO, "&CHAR(10)&"';
+            msgTemp += 'Program Id: ' + parseInt(classId, 10).toString() + ', "&CHAR(10)&"';
         }
 
-        if(parseInt(classId, 10) < 3288 || parseInt(classId, 10) > 3300)
-            msgTemp += 'Earlier Program Id: ' + classId + ', "&CHAR(10)&"';
+        if(parseInt(classId, 10) < 3288)// || parseInt(classId, 10) > 3300)
+            msgTemp += 'Earlier Program Id: ' + parseInt(classId, 10).toString() + ', "&CHAR(10)&"';
 
         var mon = parseInt(classDate.split('-')[1]);
         msgTemp += dt.toString() + 'th ' + monthName[mon - 1] + ', "&CHAR(10)&"';
