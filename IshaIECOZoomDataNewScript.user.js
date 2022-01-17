@@ -28,9 +28,8 @@ function myFunc(){
         return;
 
     var str = $('b:contains("First Name")').parent().html().split(':')[1].trim() + ' ' + $('b:contains("Last Name")').parent().html().split(':')[1].trim() + ',';
-    str += $('b:contains("Email")').parent().html().split(':')[1].trim() + ',';
     str += $('b:contains("Primary Phone")').parent().html().split(':')[1].trim() + ',';
-    str += $('table tbody tr:first-child td:nth-child(1)').html().trim();
+    str += $('b:contains("Email")').parent().html().split(':')[1].trim();
 
     var msg = '=SPLIT("' + str + '", ",")';
     GM_setClipboard (msg);
