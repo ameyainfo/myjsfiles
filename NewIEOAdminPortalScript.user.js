@@ -154,7 +154,7 @@ function myFunc(){
                // and also only for the current day
                //
                CurrentDate = new Date;
-               if($(this).find('td:nth-child(2)').html().trim() == 'Joined' && CurrentWeek)
+               if($((this).find('td:nth-child(2)').html().trim() == 'Joined' || this).find('td:nth-child(2)').html().trim() == 'Revoked') && CurrentWeek)
                msg += 'Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim() + ', "&CHAR(10)&"';
                dayidx = dayidx + 1;
                if (dayidx == secondidx)
