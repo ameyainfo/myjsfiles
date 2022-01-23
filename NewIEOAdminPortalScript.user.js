@@ -154,7 +154,7 @@ function myFunc(){
                // and also only for the current day
                //
                if($(this).find('td:nth-child(2)').html().trim() == 'Joined' && CurrentWeek)
-               msg += 'Heartbeat @ ' + CurrentDate.getHours() + ':' + CurrentDate.getMinutes() + ' - ' + $(this).find('td:nth-child(4)').html().trim() + ', "&CHAR(10)&"';
+               msg += 'Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim() + ', "&CHAR(10)&"';
                dayidx = dayidx + 1;
                if (dayidx == secondidx)
                {
@@ -167,4 +167,8 @@ function myFunc(){
         GM_setClipboard (msg);
         alert('Message copied!!!');
         }
+}
+function addZero(i) {
+  if (i < 10) {i = "0" + i}
+  return i;
 }
