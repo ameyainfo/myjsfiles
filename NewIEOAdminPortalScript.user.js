@@ -153,6 +153,7 @@ function myFunc(){
                // Heartbeat detail is picked only for 'Joined' or 'Revoked' status
                // and also only for the current day
                //
+               CurrentDate = new Date;
                if($(this).find('td:nth-child(2)').html().trim() == 'Joined' && CurrentWeek)
                msg += 'Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim() + ', "&CHAR(10)&"';
                dayidx = dayidx + 1;
