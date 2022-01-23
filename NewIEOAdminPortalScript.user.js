@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  this is IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -154,7 +154,7 @@ function myFunc(){
                // and also only for the current day
                //
                if($(this).find('td:nth-child(2)').html().trim() == 'Joined' && CurrentWeek)
-               msg += 'Heartbeat: ' + $(this).find('td:nth-child(4)').html().trim() + ', "&CHAR(10)&"';
+               msg += 'Heartbeat @ ' + CurrentDate.getHours() +':' + CurrentDate.getMinutes() + ' - ' + $(this).find('td:nth-child(4)').html().trim() + ', "&CHAR(10)&"';
                dayidx = dayidx + 1;
                if (dayidx == secondidx)
                {
