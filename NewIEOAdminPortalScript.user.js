@@ -15,6 +15,7 @@ var msg = '';
 var firstidx = 0;
 var secondidx = 0;
 var CurrentWeek = false;
+var CurrentDate = new Date;
 var CurrentDay = 0;
 var Overseas = false;
 var dt;
@@ -65,7 +66,6 @@ function myFunc(){
         var StartDate = new Date;
         StartDate.setDate(InitiationDate.getDate() - 6); // 6 - Week long IECO     2 - Weekend IECO
         var CurrentDt= new Date().getDate();
-        var CurrentDate = new Date;
         CurrentDay = new Date().getDay();
         var RegClsDay = 0;
         var msgTemp = '=SPLIT("';
