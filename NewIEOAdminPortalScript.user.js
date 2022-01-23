@@ -23,6 +23,7 @@ var dt;
 var InitiationDate = new Date(2022, 0, 23);
 var IniClass3Time = new Date(2022, 0, 23, 9, 30, 0);
 var OverseasSessions =[3324,3325,3327];
+var SupScpt = ["th","st","nd","rd","th","th","th","th","th","th"]
 var array = [
    [17, 18],
    [19, 20],
@@ -124,7 +125,10 @@ function myFunc(){
         var year = parseInt(classDate.split('-')[0]);
         if (RegClsDay != firstidx && RegInitDt == InitiationDate.getDate() && RegInitMo == (InitiationDate.getMonth()+1) && !Overseas && CurrentDay != 0)
         {
-        msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + 'th ' + monthName[mon - 1] + ', "&CHAR(10)&"';
+        var reminder = dt % 10;
+        var Text = SupScpt[reminder];
+        if (i > 10 && i < 14) Text = "th";
+        msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + Text + monthName[mon - 1] + ', "&CHAR(10)&"';
         } else {
         msgTemp += dt.toString() + 'th ' + monthName[mon - 1] + ' ' + year + ', "&CHAR(10)&"';
         }
