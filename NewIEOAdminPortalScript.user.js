@@ -127,7 +127,7 @@ function myFunc(){
         {
         var reminder = dt % 10;
         var Text = SupScpt[reminder];
-        if (i > 10 && i < 14) Text = "th";
+        if (dt > 10 && dt < 14) Text = "th";
         msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + Text + monthName[mon - 1] + ', "&CHAR(10)&"';
         } else {
         msgTemp += dt.toString() + 'th ' + monthName[mon - 1] + ' ' + year + ', "&CHAR(10)&"';
