@@ -21,13 +21,13 @@ var dt;
 //
 //  Sanity check script for 07 - 13 Feb 2022 IECO
 //
-var InitiationDate = new Date(2022, 1, 13);
-var IniClass3Time = new Date(2022, 1, 13, 9, 30, 0);
+var InitiationDate = new Date(2022, 0, 23);
+var IniClass3Time = new Date(2022, 0, 23, 9, 30, 0);
 var OverseasSessions =[3324,3325,3327];
 var array = [
-   [7, 8],
-   [9, 10],
-   [11, 12]
+   [17, 18],
+   [19, 20],
+   [21, 22]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -159,17 +159,18 @@ function myFunc(){
         var blLast = false;
         var lastSeen = '';
         var dayidx = -1;
+        secondidx = 4
         $( "table tbody tr" ).each(function() {
             if(!blLast)
             {
-               msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(2)').html().trim();
+                msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(2)').html().trim();
                //
                // Heartbeat detail is picked only for 'Joined' or 'Revoked' status
                // and also only for the current day
                //
-               CurrentDate = new Date;
-               if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && CurrentWeek)
-               msg += ',"&CHAR(10)&"Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim();
+     //          CurrentDate = new Date;
+     //          if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && CurrentWeek)
+     //          msg += ',"&CHAR(10)&"Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim();
                dayidx = dayidx + 1;
                if (dayidx == secondidx)
                {
@@ -177,7 +178,7 @@ function myFunc(){
                }
             }
         });
-         msg += '^' + rollno + '", "^")';
+        msg += '","^")';
 
         GM_setClipboard (msg);
         alert('Message copied!!!');
