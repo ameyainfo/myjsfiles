@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      4.0
 // @description  this is IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -21,13 +21,13 @@ var dt;
 //
 //  Sanity check script for 07 - 13 Feb 2022 IECO
 //
-var InitiationDate = new Date(2022, 0, 23);
-var IniClass3Time = new Date(2022, 0, 23, 9, 30, 0);
+var InitiationDate = new Date(2022, 1, 13);
+var IniClass3Time = new Date(2022, 1, 13, 9, 30, 0);
 var OverseasSessions =[3324,3325,3327];
 var array = [
-   [17, 18],
-   [19, 20],
-   [21, 22]
+   [7, 8],
+   [9, 10],
+   [11, 12]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -71,10 +71,13 @@ function myFunc(){
         var CurrentDt= new Date().getDate();
         CurrentDay = new Date().getDay();
         var CurrentWeekend = new Date;
+        var CurrentHr= new Date().getHours();
+        var CurrentMn= new Date().getMinutes();
         CurrentWeekend.setDate(CurrentDate.getDate() + ((7-CurrentDay) % 7));
         if (CurrentWeekend.getDate() == InitiationDate.getDate() && CurrentWeekend.getMonth() == (InitiationDate.getMonth()+1)) CurrentWeek = true;
         var SupScript = "";
         var RegClsDay = 0;
+        firstidx = -1;
         var msgTemp = '=SPLIT("';
         if (RegInitDt == InitiationDate.getDate() && RegInitMo == (InitiationDate.getMonth()+1))
         {
@@ -106,7 +109,10 @@ function myFunc(){
         }
         if (CurrentDay == 0)
         {
+        secondidx = 2;
+        if ((CurrentHr * 100 + CurrentMn) > 929 ) {
         secondidx = 3;
+        }
         }
         if (OverseasSessions.length != 0)
         {
@@ -118,7 +124,7 @@ function myFunc(){
         var year = parseInt(classDate.split('-')[0]);
         msgTemp += 'Overseas - IECO "&CHAR(10)&"';
         msgTemp += 'Program Id: ' + parseInt(classId, 10).toString() + ' "&CHAR(10)&"';
-        msgTemp += dt.toString() + SupScript + monthName[mon - 1] + ' ' + year + '", "^")';
+        msgTemp += dt.toString() + SupScript + ' ' + monthName[mon - 1] + ' ' + year + '", "^")';
         GM_setClipboard (msgTemp);
         alert('Message copied!!!');
         return;
@@ -129,18 +135,18 @@ function myFunc(){
         {
         msgTemp += 'Other - IECO "&CHAR(10)&"';
         msgTemp += 'Program Id: ' + parseInt(RegInitProgId, 10).toString() + ' "&CHAR(10)&"';
-        msgTemp += RegInitDt.toString() + SuperScript(RegInitDt) + monthName[parseInt(RegInitMo)-1] + ' ' + RegInitYr + '", "^")';
+        msgTemp += RegInitDt.toString() + SuperScript(RegInitDt) + ' ' + monthName[parseInt(RegInitMo)-1] + ' ' + RegInitYr + '", "^")';
         GM_setClipboard (msgTemp);
         alert('Message copied!!!');
         return;
         }
         mon = parseInt(classDate.split('-')[1]);
         year = parseInt(classDate.split('-')[0]);
-        if (RegClsDay != firstidx && CurrentDay != 0)
+        if (RegClsDay != firstidx && CurrentDay != 0 && CurrentWeek)
         {
-        msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + SupScript + monthName[mon - 1] + ', "&CHAR(10)&"';
+        msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + SupScript + ' ' + monthName[mon - 1] + ', "&CHAR(10)&"';
         } else {
-        msgTemp += dt.toString() + SupScript + monthName[mon - 1] + ' ' + year + ', "&CHAR(10)&"';
+        msgTemp += dt.toString() + SupScript + ' ' + monthName[mon - 1] + ' ' + year + ', "&CHAR(10)&"';
         }
         var hr = classDate.substr(classDate.indexOf('<br>') + 4, 5);
 
@@ -159,7 +165,6 @@ function myFunc(){
         var blLast = false;
         var lastSeen = '';
         var dayidx = -1;
-        secondidx = 4
         $( "table tbody tr" ).each(function() {
             if(!blLast)
             {
@@ -168,17 +173,17 @@ function myFunc(){
                // Heartbeat detail is picked only for 'Joined' or 'Revoked' status
                // and also only for the current day
                //
-     //          CurrentDate = new Date;
-     //          if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && CurrentWeek)
-     //          msg += ',"&CHAR(10)&"Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim();
                dayidx = dayidx + 1;
+               CurrentDate = new Date;
+               if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && CurrentWeek && dayidx == secondidx)
+               msg += ',"&CHAR(10)&"Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim();
                if (dayidx == secondidx)
                {
                    blLast = true;
                }
             }
         });
-        msg += '","^")';
+        msg += '^' + rollno + '", "^")';
 
         GM_setClipboard (msg);
         alert('Message copied!!!');
