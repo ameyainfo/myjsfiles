@@ -74,7 +74,10 @@ function myFunc(){
         var CurrentHr= new Date().getHours();
         var CurrentMn= new Date().getMinutes();
         CurrentWeekend.setDate(CurrentDate.getDate() + ((7-CurrentDay) % 7));
-        if (CurrentWeekend.getDate() == InitiationDate.getDate() && CurrentWeekend.getMonth() == (InitiationDate.getMonth()+1)) CurrentWeek = true;
+
+        if (CurrentWeekend.getDate() == InitiationDate.getDate() && CurrentWeekend.getMonth() == (InitiationDate.getMonth())) {
+            CurrentWeek = true;
+        }
         var SupScript = "";
         var RegClsDay = 0;
         firstidx = -1;
@@ -122,7 +125,7 @@ function myFunc(){
         {
         var mon = parseInt(classDate.split('-')[1]);
         var year = parseInt(classDate.split('-')[0]);
-        msgTemp += 'Overseas - IECO "&CHAR(10)&"';
+        msgTemp += 'Overseas IECO Participant"&CHAR(10)&"';
         msgTemp += 'Program Id: ' + parseInt(classId, 10).toString() + ' "&CHAR(10)&"';
         msgTemp += dt.toString() + SupScript + ' ' + monthName[mon - 1] + ' ' + year + '", "^")';
         GM_setClipboard (msgTemp);
@@ -133,7 +136,7 @@ function myFunc(){
         }
         } else
         {
-        msgTemp += 'Other - IECO "&CHAR(10)&"';
+        msgTemp += 'Other IECO Particpant"&CHAR(10)&"';
         msgTemp += 'Program Id: ' + parseInt(RegInitProgId, 10).toString() + ' "&CHAR(10)&"';
         msgTemp += RegInitDt.toString() + SuperScript(RegInitDt) + ' ' + monthName[parseInt(RegInitMo)-1] + ' ' + RegInitYr + '", "^")';
         GM_setClipboard (msgTemp);
@@ -142,6 +145,7 @@ function myFunc(){
         }
         mon = parseInt(classDate.split('-')[1]);
         year = parseInt(classDate.split('-')[0]);
+
         if (RegClsDay != firstidx && CurrentDay != 0 && CurrentWeek)
         {
         msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + SupScript + ' ' + monthName[mon - 1] + ', "&CHAR(10)&"';
@@ -175,7 +179,7 @@ function myFunc(){
                //
                dayidx = dayidx + 1;
                CurrentDate = new Date;
-               if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && CurrentWeek && dayidx == secondidx)
+               if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && $(this).find('td:nth-child(4)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
                msg += ',"&CHAR(10)&"Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim();
                if (dayidx == secondidx)
                {
