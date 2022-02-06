@@ -68,8 +68,6 @@ var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 
         var mon = parseInt(fullDate.split('-')[1]);
         var yr = parseInt(fullDate.split('-')[0]);
         var dt = str.slice(str.indexOf('<br>') - 2, str.indexOf('<br>'));
-        alert(RegInitYr);
-        alert(iniClass3Date.getYear());
         if(RegInitDt == iniClass3Date.getDate() && RegInitMo == (iniClass3Date.getMonth() + 1))
         {
         CurrentProg = true;
