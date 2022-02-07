@@ -123,6 +123,7 @@ function myFunc(){
         {
         if (classId == OverseasSessions[idx])
         {
+        msgTemp += 'Overseas IECO Particpant"&CHAR(10)&"';
         }
         }
         }
