@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      4.0
+// @version      4.1
 // @description  this is IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -123,14 +123,6 @@ function myFunc(){
         {
         if (classId == OverseasSessions[idx])
         {
-        var mon = parseInt(classDate.split('-')[1]);
-        var year = parseInt(classDate.split('-')[0]);
-        msgTemp += 'Overseas IECO Participant"&CHAR(10)&"';
-        msgTemp += 'Program Id: ' + parseInt(classId, 10).toString() + ' "&CHAR(10)&"';
-        msgTemp += dt.toString() + SupScript + ' ' + monthName[mon - 1] + ' ' + year + '", "^")';
-        GM_setClipboard (msgTemp);
-        alert('Message copied!!!');
-        return;
         }
         }
         }
@@ -179,7 +171,7 @@ function myFunc(){
                //
                dayidx = dayidx + 1;
                CurrentDate = new Date;
-               if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && $(this).find('td:nth-child(4)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
+               if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Completed' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && $(this).find('td:nth-child(4)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
                msg += ',"&CHAR(10)&"Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim();
                if (dayidx == secondidx)
                {
