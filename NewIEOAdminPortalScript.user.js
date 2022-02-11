@@ -173,7 +173,7 @@ function myFunc(){
         var lastSeen = '';
         var dayidx = -1;
         if($( "table tbody tr" ).length == 1){
-        msg += '"&CHAR(10)&"No Sessions Data", "^")';
+        msg += '"&CHAR(10)&"No Sessions Data^' + rollno + '", "^")'; 
         GM_setClipboard (msg);
         alert('Message copied!!!');
         return;
