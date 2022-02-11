@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      4.1
+// @version      4.2
 // @description  this is IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -11,7 +11,7 @@
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
-var msg = '';
+var msg = 'No record found';
 var firstidx = 0;
 var secondidx = 0;
 var CurrentWeek = false;
@@ -45,6 +45,7 @@ var myInt;
 })();
 
 function myFunc(){
+
     if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No.' ||
       $('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session')
     {
@@ -52,11 +53,20 @@ function myFunc(){
     }
     else
         return;
-
     var rollno = '';
-
     if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No.')
     {
+        if($('.card-header:contains("Participant Details")').parent().children('.card-body:contains("No record found")').length == 1){
+        GM_setClipboard ("No IECO Record Found");
+        alert('Message copied!!!');
+        return;
+        }
+   //      if($( "table tbody tr" ).length == 0){
+   //      msg = 'No Sessions Data';
+   //      GM_setClipboard (msg);
+   //     alert('Message copied!!!');
+   //     return;
+   //     }
         var classId = $('table tbody tr:first-child td:nth-child(2)').html().split('|')[0];
         var classDate = $('table tbody tr:first-child td:nth-child(2)').html().split('|')[1];
         var RegInitProgId = $('table tbody tr:first-child td:nth-child(4)').html().split('|')[0];
@@ -136,8 +146,8 @@ function myFunc(){
         alert('Message copied!!!');
         return;
         }
-        mon = parseInt(classDate.split('-')[1]);
-        year = parseInt(classDate.split('-')[0]);
+        var mon = parseInt(classDate.split('-')[1]);
+        var year = parseInt(classDate.split('-')[0]);
 
         if (RegClsDay != firstidx && CurrentDay != 0 && CurrentWeek)
         {
@@ -162,12 +172,22 @@ function myFunc(){
         var blLast = false;
         var lastSeen = '';
         var dayidx = -1;
+        if($( "table tbody tr" ).length == 1){
+        msg += '"&CHAR(10)&"No Sessions Data", "^")';
+        GM_setClipboard (msg);
+        alert('Message copied!!!');
+        return;
+        }
         $( "table tbody tr" ).each(function() {
             if(!blLast)
             {
+                if (dayidx == -1 && $(this).find('td:nth-child(1)').html().trim() != 'Session 1')
+                {
+                msg += ',"&CHAR(10)&"Session 1 - No Data'+ ',"&CHAR(10)&"Session 2 - No Data';
+                }
                 msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(2)').html().trim();
                //
-               // Heartbeat detail is picked only for 'Joined' or 'Revoked' status
+               // Heartbeat detail is picked only for 'Joined' or 'Revoked' or 'Completed' status
                // and also only for the current day
                //
                dayidx = dayidx + 1;
@@ -184,7 +204,8 @@ function myFunc(){
 
         GM_setClipboard (msg);
         alert('Message copied!!!');
-        }
+         }
+
 }
 function addZero(i) {
   if (i < 10) {i = "0" + i}
