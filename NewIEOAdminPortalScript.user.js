@@ -134,10 +134,10 @@ function myFunc(){
         }
         if (CurrentDay == 0)
         {
-        secondidx = 2;
-        if ((CurrentHr * 100 + CurrentMn) > 929 ) {
-        secondidx = 3;
-        }
+        secondidx = 4;
+   //     if ((CurrentHr * 100 + CurrentMn) > 929 ) {
+   //     secondidx = 3;
+   //     }
         }
         if (OverseasSessions.length != 0)
         {
