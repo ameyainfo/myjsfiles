@@ -16,6 +16,7 @@ var msgTemp = '';
 var matched = false;
 var firstidx = 0;
 var secondidx = 0;
+var Satsang = false;
 var CurrentWeek = false;
 var CurrentDate = new Date;
 var CurrentDay = 0;
@@ -98,7 +99,13 @@ function myFunc(){
         var CurrentHr= new Date().getHours();
         var CurrentMn= new Date().getMinutes();
         CurrentWeekend.setDate(CurrentDate.getDate() + ((7-CurrentDay) % 7));
+        var SatsangWeekend = new Date;
+        SatsangWeekend.setDate(InitiationDate.getDate() + 7);
         if (CurrentWeekend.getDate() == InitiationDate.getDate() && CurrentWeekend.getMonth() == (InitiationDate.getMonth())) {
+            CurrentWeek = true;
+        }
+        if (CurrentWeekend.getDate() == SatsangWeekend.getDate() && CurrentWeekend.getMonth() == (SatsangWeekend.getMonth())) {
+            Satsang = true;
             CurrentWeek = true;
         }
         var SupScript = "";
@@ -134,7 +141,7 @@ function myFunc(){
         }
         if (CurrentDay == 0)
         {
-        secondidx = 3;
+        secondidx = 2;
         if ((CurrentHr * 100 + CurrentMn) > 929 ) {
         secondidx = 3;
         }
@@ -185,7 +192,7 @@ function myFunc(){
         alert('Message copied!!!');
         return;
         }
-         secondidx = 4;
+        if (Satsang) secondidx = 4;
         $( "table tbody tr" ).each(function() {
             if(!blLast)
             {
@@ -193,8 +200,12 @@ function myFunc(){
                 {
                 msg += ',"&CHAR(10)&"Session 1 - No Data"&CHAR(10)&"Session 2 - No Data';
                 }
+                if ($(this).find('td:nth-child(1)').html().trim() == 'Session 99') {
+                msg += ',"&CHAR(10)&"Spl Satsang - ' + $(this).find('td:nth-child(2)').html().trim();
+                } else {
                 msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(2)').html().trim();
-               //
+                }
+                //
                // Heartbeat detail is picked only for 'Joined' or 'Revoked' or 'Completed' status
                // and also only for the current day
                //
@@ -208,7 +219,11 @@ function myFunc(){
                }
             }
         });
+        if (secondidx == 4) {
+        msg += '", "^")';
+        } else {
         msg += '^' + rollno + '", "^")';
+        }
 
         GM_setClipboard (msg);
         alert('Message copied!!!');
