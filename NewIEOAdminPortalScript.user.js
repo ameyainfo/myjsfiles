@@ -12,11 +12,13 @@
 // ==/UserScript==
 
 var msg = '';
+var Action = '';
 var msgTemp = '';
 var matched = false;
 var firstidx = 0;
 var secondidx = 0;
 var Satsang = false;
+var prvPage = false;
 var CurrentWeek = false;
 var CurrentDate = new Date;
 var CurrentDay = 0;
@@ -170,9 +172,16 @@ function myFunc(){
 
         msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 17) ? 'Evening' : 'Morning');
         rollno = $(this).find('td:nth-child(1)').html().trim();
-
+        let Choice = prompt('Action? "Sanity Check" or "Revoke" or "Override"', "Sanity Check");
+        if (Choice == null || Choice == "")
+        {
+        prvPage = false;
+        return;
+        }
         sessionStorage.setItem('clicked', msgTemp);
         sessionStorage.setItem('rollno', rollno);
+        Action = Choice;
+        prvPage = true;
         $(this).find('td:last-child a:contains("Session Details")').get(0).click();
         }
         }
@@ -182,7 +191,8 @@ function myFunc(){
      {
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollno');
-
+        alert(Action);
+        if (Action == 'Sanity Check') {
         var blLast = false;
         var lastSeen = '';
         var dayidx = -1;
@@ -228,6 +238,15 @@ function myFunc(){
         GM_setClipboard (msg);
         alert('Message copied!!!');
         return;
+        } else {
+        var blLast = false;
+        $( "table tbody tr" ).each(function() {
+        if (!blLast) {
+        if (prvPage) $(this).find('td:last-child button:contains("Change Status")').get(0).click();
+        blLast = true;
+        }
+        });
+        }   
         }
         if(!matched)
         {
