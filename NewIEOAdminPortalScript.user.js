@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      4.21
-// @description  this is IEO New Admin script
+// @version      1.0
+// @description  This is an IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
 // @icon         https://www.google.com/s2/favicons?domain=innerengineering.com
@@ -17,28 +17,34 @@ var msgTemp = '';
 var matched = false;
 var firstidx = 0;
 var secondidx = 0;
+var SessPageCount = 0;
 var Satsang = false;
-var prvPage = false;
 var CurrentWeek = false;
 var CurrentDate = new Date;
 var CurrentDay = 0;
 var dt;
-var RegInitProgId = ''
-var RegInitDate = ''
-var RegInitDt = ''
-var RegInitMo = ''
-var RegInitYr = ''
+var RegInitProgId = '';
+var RegClsDay = 0;
+var RegInitDate = 0;
+var RegInitDt = '';
+var RegInitMo = '';
+var RegInitYr = '';
+var OtherProgId = '';
+var OtherProgDt = '';
+var OtherProgMo = '';
+var OtherProgYr = '';
 //
-//  Sanity check script for 07 - 13 Feb 2022 IECO
+//  Sanity check script for 25 April - 01 May 2022 IECO
 //
-var InitiationDate = new Date(2022, 1, 13);
-var IniClass3Time = new Date(2022, 1, 13, 9, 30, 0);
-var OverseasSessions =[3324,3325,3327];
-var InitSession = 3311;
+var InitiationDate = new Date(2022, 4, 1);
+var IniClass3Time = new Date(2022, 4, 1, 9, 30, 0);
+var SatsangWeekend = new Date(2022, 4, 8);
+var OverseasSessions =[3486,3487,3488];
+var InitSession = 3472;
 var array = [
-   [7, 8],
-   [9, 10],
-   [11, 12]
+   [25, 26],
+   [27, 28],
+   [29, 30]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -69,19 +75,20 @@ function myFunc(){
     if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No.')
     {
         if($('.card-header:contains("Participant Details")').parent().children('.card-body:contains("No record found")').length == 1){
-        GM_setClipboard ("No IECO Record Found");
+        GM_setClipboard ("No Record Found");
         alert('Message copied!!!');
         return;
         }
-        $( "table tbody tr" ).each(function() {
-        if(!blLast)
-        {
-        if ($(this).find('td:first-child').html().trim() == 'No data available in table') {
+        if ($("table tbody tr td").length == 1) {
         msg = 'No IECO Record';
         GM_setClipboard (msg);
         alert('Message copied!!!');
         return;
         }
+        var TrIdx = 0;
+        $( "table tbody tr" ).each(function() {
+        if(!blLast)
+        {
         msgTemp = '=SPLIT("';
         RegInitProgId = $(this).find('td:nth-child(4)').html().split('|')[0];
         var classId = $(this).find('td:nth-child(2)').html().split('|')[0];
@@ -90,6 +97,20 @@ function myFunc(){
         RegInitDt = RegInitDate.slice(9,11);
         RegInitMo = RegInitDate.slice(6,8);
         RegInitYr = RegInitDate.slice(1,5);
+        TrIdx =TrIdx + 1;
+        if(TrIdx == 1) {
+        OtherProgId = RegInitProgId;
+        OtherProgDt = RegInitDt;
+        OtherProgMo = RegInitMo;
+        OtherProgYr = RegInitYr;
+        } else {
+        if(RegInitProgId > OtherProgId) {
+        OtherProgId = RegInitProgId;
+        OtherProgDt = RegInitDt;
+        OtherProgMo = RegInitMo;
+        OtherProgYr = RegInitYr;
+        }
+        }
 
         if( RegInitProgId == InitSession) {
         matched = true;
@@ -101,8 +122,8 @@ function myFunc(){
         var CurrentHr= new Date().getHours();
         var CurrentMn= new Date().getMinutes();
         CurrentWeekend.setDate(CurrentDate.getDate() + ((7-CurrentDay) % 7));
-        var SatsangWeekend = new Date;
-        SatsangWeekend.setDate(InitiationDate.getDate() + 7);
+        Satsang = false;
+        CurrentWeek = false;
         if (CurrentWeekend.getDate() == InitiationDate.getDate() && CurrentWeekend.getMonth() == (InitiationDate.getMonth())) {
             CurrentWeek = true;
         }
@@ -132,7 +153,7 @@ function myFunc(){
              firstidx = i;
              secondidx = 1;
             }
-            if(array[i][0] == RegClsDate || array[i][1] == RegClsDate)
+            if(array[i][0] == RegClsDate)
             {
              RegClsDay = i;
             }
@@ -172,16 +193,10 @@ function myFunc(){
 
         msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 17) ? 'Evening' : 'Morning');
         rollno = $(this).find('td:nth-child(1)').html().trim();
-        let Choice = prompt('Action? "Sanity Check" or "Revoke" or "Override"', "Sanity Check");
-        if (Choice == null || Choice == "")
-        {
-        prvPage = false;
-        return;
-        }
         sessionStorage.setItem('clicked', msgTemp);
         sessionStorage.setItem('rollno', rollno);
-        Action = Choice;
-        prvPage = true;
+        sessionStorage.setItem('RegClsDay', RegClsDay);
+        SessPageCount = 0;
         $(this).find('td:last-child a:contains("Session Details")').get(0).click();
         }
         }
@@ -191,8 +206,7 @@ function myFunc(){
      {
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollno');
-        alert(Action);
-        if (Action == 'Sanity Check') {
+        RegClsDay = sessionStorage.getItem('RegClsDay');
         var blLast = false;
         var lastSeen = '';
         var dayidx = -1;
@@ -211,9 +225,9 @@ function myFunc(){
                 msg += ',"&CHAR(10)&"Session 1 - No Data"&CHAR(10)&"Session 2 - No Data';
                 }
                 if ($(this).find('td:nth-child(1)').html().trim() == 'Session 99') {
-                msg += ',"&CHAR(10)&"Spl Satsang - ' + $(this).find('td:nth-child(2)').html().trim();
+                msg += ',"&CHAR(10)&"Spl Satsang - ' + $(this).find('td:nth-child(3)').html().trim();
                 } else {
-                msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(2)').html().trim();
+                msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim();
                 }
                 //
                // Heartbeat detail is picked only for 'Joined' or 'Revoked' or 'Completed' status
@@ -221,12 +235,11 @@ function myFunc(){
                //
                dayidx = dayidx + 1;
                CurrentDate = new Date;
-               if(($(this).find('td:nth-child(2)').html().trim() == 'Joined' || $(this).find('td:nth-child(2)').html().trim() == 'Completed' || $(this).find('td:nth-child(2)').html().trim() == 'Revoked') && $(this).find('td:nth-child(4)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
-               msg += ',"&CHAR(10)&"Heartbeat @ ' + addZero(CurrentDate.getHours()) + ':' + addZero(CurrentDate.getMinutes()) + ' - ' + $(this).find('td:nth-child(4)').html().trim();
-               if (dayidx == secondidx)
-               {
-                   blLast = true;
-               }
+               var Hrs = CurrentDate.getHours();
+               var Mins = CurrentDate.getMinutes();
+               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
+               msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+               if (dayidx == secondidx) blLast = true;
             }
         });
         if (secondidx == 4) {
@@ -234,32 +247,18 @@ function myFunc(){
         } else {
         msg += '^' + rollno + '", "^")';
         }
-
         GM_setClipboard (msg);
         alert('Message copied!!!');
         return;
-        } else {
-        var blLast = false;
-        $( "table tbody tr" ).each(function() {
-        if (!blLast) {
-        if (prvPage) $(this).find('td:last-child button:contains("Change Status")').get(0).click();
-        blLast = true;
-        }
-        });
-        }   
         }
         if(!matched)
         {
         msgTemp += 'Other IECO Particpant"&CHAR(10)&"';
-        msgTemp += 'Program Id: ' + parseInt(RegInitProgId, 10).toString() + ' "&CHAR(10)&"';
-        msgTemp += RegInitDt.toString() + SuperScript(RegInitDt) + ' ' + monthName[parseInt(RegInitMo)-1] + ' ' + RegInitYr + '", "^")';
+        msgTemp += 'Program Id: ' + parseInt(OtherProgId, 10).toString() + ' "&CHAR(10)&"';
+        msgTemp += OtherProgDt.toString() + SuperScript(OtherProgDt) + ' ' + monthName[parseInt(OtherProgMo)-1] + ' ' + OtherProgYr + '", "^")';
         GM_setClipboard (msgTemp);
         alert('Message copied!!!');
         }
-}
-function addZero(i) {
-  if (i < 10) {i = "0" + i}
-  return i;
 }
 function SuperScript(i) {
   var SupScpt = ["th ","st ","nd ","rd ","th ","th ","th ","th ","th ","th "];
