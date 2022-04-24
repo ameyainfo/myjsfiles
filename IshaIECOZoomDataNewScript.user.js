@@ -34,6 +34,8 @@ var OtherProgId = '';
 var OtherProgDt = '';
 var OtherProgMo = '';
 var OtherProgYr = '';
+var str ='';
+var str1 = '';
 //
 //  Sanity check script for 25 April - 01 May 2022 IECO
 //
@@ -197,9 +199,9 @@ function myFunc(){
 
         msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 17) ? 'Evening' : 'Morning');
         rollno = $(this).find('td:nth-child(1)').html().trim();
-        var str = $('b:contains("First Name")').parent().html().split(':')[1].trim() + ' ' + $('b:contains("Last Name")').parent().html().split(':')[1].trim() + ',';
-        var str1 = ' ' + $('b:contains("Email")').parent().html().split(':')[1].trim() +', ' + rollno + '\n';
-        let Choice = prompt(str + str1 + 'Action? "O-override" or "R-revoke" or "S-sanity Check"', "R");
+        str = $('b:contains("First Name")').parent().html().split(':')[1].trim() + ' ' + $('b:contains("Last Name")').parent().html().split(':')[1].trim() + ',';
+        str1 = ' ' + $('b:contains("Email")').parent().html().split(':')[1].trim() +', ' + rollno + '\n';
+        let Choice = prompt(str + str1 + 'Action? "R-revoke" or "S-sanity Check"', "R");
         if (Choice == null || Choice == "") {
         prvPage = false;
         return;
@@ -278,19 +280,28 @@ function myFunc(){
             CurrentWeek = true;
         if (prvPage && CurrentWeek && !Overseas) allowed = true;
         if(allowed) {
-        if(secondidx == 0) $('table tbody tr:nth-child(1) td button').click();
-        if(secondidx == 1) $('table tbody tr:nth-child(2) td button').click();
-        if(secondidx == 2) $('table tbody tr:nth-child(3) td button').click();
-        if(secondidx == 3) $('table tbody tr:nth-child(4) td button').click();
-        if(secondidx == 4) $('table tbody tr:nth-child(5) td button').click();
-        if (Action == 'R' || Action == 'r') {
+            dayidx = -1;
+            msg = str + str1 + '\n' + 'Current Status:' + '\n';
+            $( "table tbody tr" ).each(function() {
+            if(!blLast)
+            {
+            msg += $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim() +'\n';
+            dayidx = dayidx + 1;
+            if (dayidx == secondidx) blLast = true;
+            }
+        });
+        let Choice = prompt(msg + 'Revoke Session# ?', secondidx+1);
+        if (Choice == null || Choice == "") {
+        prvPage = false;
+        return;
+        }
+        if(Choice == 1) $('table tbody tr:nth-child(1) td button').click();
+        if(Choice == 2) $('table tbody tr:nth-child(2) td button').click();
+        if(Choice == 3) $('table tbody tr:nth-child(3) td button').click();
+        if(Choice == 4) $('table tbody tr:nth-child(4) td button').click();
+        if(Choice == 5) $('table tbody tr:nth-child(5) td button').click();
         $('#sessStatus').val('kickout');
         msgTemp = 'Revoked @ ';
-        }
-        if (Action == 'O' || Action == 'o') {
-        $('#sessStatus').val('allowed');
-        msgTemp = 'Override @ ';
-        }
         var $e = $("#confirmModalAction");
         $("#btn-confirm").attr("data-sessstatus", $e.find("select[name=sessStatus]").val());
         confirmIECOSupportAction();
