@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  This is an IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -15,6 +15,7 @@ var msg = '';
 var Action = '';
 var msgTemp = '';
 var matched = false;
+var backTo = false;
 var firstidx = 0;
 var secondidx = 0;
 var SessPageCount = 0;
@@ -83,6 +84,11 @@ function myFunc(){
         alert('Message copied!!!');
         return;
         }
+        if(backTo && prvPage) {
+        prvPage = false;
+        backTo = false;
+        return;
+        }
         if ($("table tbody tr td").length == 1) {
         msg = 'No IECO Record';
         GM_setClipboard (msg);
@@ -97,6 +103,7 @@ function myFunc(){
         RegInitProgId = $(this).find('td:nth-child(4)').html().split('|')[0];
         var classId = $(this).find('td:nth-child(2)').html().split('|')[0];
         var classDate = $(this).find('td:nth-child(2)').html().split('|')[1];
+        var classTimeZone = $(this).find('td:nth-child(2)').html().split('|')[2];
         RegInitDate = $(this).find('td:nth-child(4)').html().split('|')[1];
         RegInitDt = RegInitDate.slice(9,11);
         RegInitMo = RegInitDate.slice(6,8);
@@ -188,37 +195,28 @@ function myFunc(){
         }
         var mon = parseInt(classDate.split('-')[1]);
         var year = parseInt(classDate.split('-')[0]);
+        rollno = $(this).find('td:nth-child(1)').html().trim();
+        str = $('b:contains("First Name")').parent().html().split(':')[1].trim() + ' ' + $('b:contains("Last Name")').parent().html().split(':')[1].trim() + ',';
+        str1 = str + ' ' + $('b:contains("Email")').parent().html().split(':')[1].trim() +', ' + rollno + '\n' + '\nCurrent Status:\n';
 
         if (RegClsDay != firstidx && CurrentDay != 0 && CurrentWeek)
         {
-        msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + SupScript + ' ' + monthName[mon - 1] + ', "&CHAR(10)&"';
+        msgTemp += prefix[RegClsDay] + ', "&CHAR(10)&"' + dt.toString() + SupScript + ' ' + monthName[mon - 1] + ' ' + year + ', "&CHAR(10)&"';
         } else {
         msgTemp += dt.toString() + SupScript + ' ' + monthName[mon - 1] + ' ' + year + ', "&CHAR(10)&"';
         }
+        str1 += dt.toString() + SupScript + ' ' + monthName[mon - 1] + ' ' + year + ' ';
         var hr = classDate.substr(classDate.indexOf('<br>') + 4, 5);
 
         msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 17) ? 'Evening' : 'Morning');
-        rollno = $(this).find('td:nth-child(1)').html().trim();
-        str = $('b:contains("First Name")').parent().html().split(':')[1].trim() + ' ' + $('b:contains("Last Name")').parent().html().split(':')[1].trim() + ',';
-        str1 = ' ' + $('b:contains("Email")').parent().html().split(':')[1].trim() +', ' + rollno + '\n';
-        let Choice = prompt(str + str1 + 'Action? "R-revoke" or "S-sanity Check"', "R");
-        if (Choice == null || Choice == "") {
-        prvPage = false;
-        return;
-        }
-        if (Choice == 'Z' || Choice == 'z') {
+        str1 += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 17) ? 'Evening' : 'Morning');
+        if (Overseas) msgTemp += ' ' + classTimeZone;
         str += $('b:contains("Primary Phone")').parent().html().split(':')[1].trim() + ',';
         str += $('b:contains("Email")').parent().html().split(':')[1].trim();
-        var msg = '=SPLIT("' + str + '", ",")';
-        GM_setClipboard (msg);
-        alert('Message copied!!!');
-        return;
-        }
         sessionStorage.setItem('clicked', msgTemp);
         sessionStorage.setItem('rollno', rollno);
         sessionStorage.setItem('RegClsDay', RegClsDay);
         SessPageCount = 0;
-        Action = Choice;
         prvPage = true;
         $(this).find('td:last-child a:contains("Session Details")').get(0).click();
         }
@@ -230,10 +228,35 @@ function myFunc(){
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollno');
         RegClsDay = sessionStorage.getItem('RegClsDay');
-        if (Action == 'S' || Action == 's') {
-        var blLast = false;
+            var dayidx = -1;
+            var blLast = false;
+            msgTemp = str1 + '\n';
+            $( "table tbody tr" ).each(function() {
+            if(!blLast)
+            {
+            msgTemp += $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim() +'\n';
+            dayidx = dayidx + 1;
+            if (dayidx == secondidx) blLast = true;
+            }
+        });
+        let Choice = prompt(msgTemp + '\nFor Revoke enter Session#                                For Sanity Check enter "S" or "s"', "S");
+        if (Choice == null || Choice == "") {
+        backTo = true;
+        backToDetails();
+        return;
+        }
+        if (Choice == 'Z' || Choice == 'z') {
+        msgTemp = '=SPLIT("' + str +'",",")';
+        GM_setClipboard (msgTemp);
+        alert('Message copied!!!');
+        backTo = true;
+        backToDetails();
+        return;
+        }
+        if (Choice == 'S' || Choice == 's') {
+        blLast = false;
         var lastSeen = '';
-        var dayidx = -1;
+        dayidx = -1;
         if($( "table tbody tr" ).length == 1){
         msg += '"&CHAR(10)&"No Sessions Data^' + rollno + '", "^")';
         GM_setClipboard (msg);
@@ -261,7 +284,7 @@ function myFunc(){
                CurrentDate = new Date;
                var Hrs = CurrentDate.getHours();
                var Mins = CurrentDate.getMinutes();
-               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
+               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx && !Overseas)
                msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
                if (dayidx == secondidx) blLast = true;
             }
@@ -273,6 +296,8 @@ function myFunc(){
         }
         GM_setClipboard (msg);
         alert('Message copied!!!');
+        backTo = true;
+        backToDetails();
         return;
         } else {
         if(Satsang) secondidx = 4;
@@ -280,21 +305,6 @@ function myFunc(){
             CurrentWeek = true;
         if (prvPage && CurrentWeek && !Overseas) allowed = true;
         if(allowed) {
-            dayidx = -1;
-            msg = str + str1 + '\n' + 'Current Status:' + '\n';
-            $( "table tbody tr" ).each(function() {
-            if(!blLast)
-            {
-            msg += $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim() +'\n';
-            dayidx = dayidx + 1;
-            if (dayidx == secondidx) blLast = true;
-            }
-        });
-        let Choice = prompt(msg + 'Revoke Session# ?', secondidx+1);
-        if (Choice == null || Choice == "") {
-        prvPage = false;
-        return;
-        }
         if(Choice == 1) $('table tbody tr:nth-child(1) td button').click();
         if(Choice == 2) $('table tbody tr:nth-child(2) td button').click();
         if(Choice == 3) $('table tbody tr:nth-child(3) td button').click();
