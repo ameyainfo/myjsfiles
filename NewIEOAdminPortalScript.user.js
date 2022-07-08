@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New IEO Portal Script
 // @namespace    http://tampermonkey.net/
-// @version      4.50
+// @version      4.60
 // @description  This is an IEO New Admin script
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -34,13 +34,13 @@ var OtherProgDt = '';
 var OtherProgMo = '';
 var OtherProgYr = '';
 //
-//  Sanity check script for 25 April - 01 May 2022 IECO
+//  Sanity check script for 25 July - 31 July 2022 IECO
 //
-var InitiationDate = new Date(2022, 4, 1);
-var IniClass3Time = new Date(2022, 4, 1, 9, 30, 0);
-var SatsangWeekend = new Date(2022, 4, 8);
-var OverseasSessions =[3486,3487,3488];
-var InitSession = 3472;
+var InitiationDate = new Date(2022, 6, 31);
+var IniClass3Time = new Date(2022, 6, 31, 9, 30, 0);
+var SatsangWeekend = new Date(2022, 7, 7);
+var OverseasSessions =[3559,3569,3582];
+var InitSession = 3555;
 var array = [
    [25, 26],
    [27, 28],
