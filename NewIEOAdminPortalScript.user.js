@@ -62,9 +62,10 @@ var myInt;
 })();
 
 function myFunc(){
-
-    if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No.' ||
-      $('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session')
+    let text = $('table thead tr:first-child th:nth-child(1)').html().trim();
+    let RollNumberYes = text.includes("Roll No");
+    let SessionYes = text.includes("Session");
+    if(RollNumberYes || SessionYes)
     {
         clearInterval(myInt);
     }
@@ -72,7 +73,7 @@ function myFunc(){
         return;
     var rollno = '';
     matched = false;
-    if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No.')
+    if(RollNumberYes)
     {
         if($('.card-header:contains("Participant Details")').parent().children('.card-body:contains("No record found")').length == 1){
         GM_setClipboard ("No Record Found");
@@ -93,6 +94,7 @@ function myFunc(){
         RegInitProgId = $(this).find('td:nth-child(4)').html().split('|')[0];
         var classId = $(this).find('td:nth-child(2)').html().split('|')[0];
         var classDate = $(this).find('td:nth-child(2)').html().split('|')[1];
+        var classDateZone = $(this).find('td:nth-child(2)').html().split('|')[2];
         RegInitDate = $(this).find('td:nth-child(4)').html().split('|')[1];
         RegInitDt = RegInitDate.slice(9,11);
         RegInitMo = RegInitDate.slice(6,8);
@@ -175,7 +177,12 @@ function myFunc(){
         {
         if (classId == OverseasSessions[idx])
         {
-        msgTemp += 'Overseas IECO Particpant"&CHAR(10)&"';
+        var TimeZone  = classDateZone.slice(1, classDateZone.indexOf('<br>'));
+        if (classDateZone.includes('<br>')) {
+        msgTemp += 'Overseas IECO Particpant"&CHAR(10)&"' + TimeZone + '"&CHAR(10)&"' ;
+        } else {
+        msgTemp += 'Overseas IECO Particpant"&CHAR(10)&"' + classDateZone + '"&CHAR(10)&"' ;
+        }
         }
         }
         }
