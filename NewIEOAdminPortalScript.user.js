@@ -65,7 +65,7 @@ function myFunc(){
     let text = $('table thead tr:first-child th:nth-child(1)').html().trim();
     let RollNumberYes = text.includes("Roll No");
     let SessionYes = text.includes("Session");
-    if(RollNumberYes || SessionYes)
+    if(RollNumberYes || SessionYes || (text = "Roll No.") || (text = "Session"))
     {
         clearInterval(myInt);
     }
