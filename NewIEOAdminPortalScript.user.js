@@ -10,6 +10,7 @@
 // @require https://code.jquery.com/jquery-1.8.3.min.js
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
+/* globals jQuery, $, waitForKeyElements */
 
 var msg = '';
 var Action = '';
