@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         Sanity Script August 1
 // @namespace    http://tampermonkey.net/
 // @version      4.80
 // @description  try to take over the world!
@@ -34,18 +34,19 @@ var OtherProgId = '';
 var OtherProgDt = '';
 var OtherProgMo = '';
 var OtherProgYr = '';
+var BackfromSession = false;
 //
 //  Sanity check script for 22 - 28 August 2022 IECO
 //
 var InitiationDate = new Date(2022, 7, 28);
 var IniClass3Time = new Date(2022, 7, 28, 9, 30, 0);
 var SatsangWeekend = new Date(2022, 8, 4);
-var OverseasSessions =[3523];
+var OverseasSessions =[];
 var InitSession = 3556;
 var array = [
    [22, 23],
    [24, 25],
-   [26, 28]
+   [26, 27]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -87,6 +88,10 @@ function myFunc(){
         GM_setClipboard (msg);
         alert('Message copied!!!');
         return;
+        }
+        if (BackfromSession) {
+            BackfromSession = false;
+            return;
         }
         var TrIdx = 0;
         $( "table tbody tr" ).each(function() {
@@ -179,7 +184,7 @@ function myFunc(){
         {
         if (classId == OverseasSessions[idx])
         {
-        var TimeZone  = classDateZone.slice(1, classDateZone.indexOf('<br>'));
+        var TimeZone = classDateZone.slice(1, classDateZone.indexOf('<br>'));
         if (classDateZone.includes('<br>')) {
         msgTemp += 'Overseas IECO Particpant"&CHAR(10)&"' + TimeZone + '"&CHAR(10)&"' ;
         } else {
@@ -216,6 +221,7 @@ function myFunc(){
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollno');
         RegClsDay = sessionStorage.getItem('RegClsDay');
+        BackfromSession = false;
         var blLast = false;
         var lastSeen = '';
         var dayidx = -1;
@@ -246,8 +252,7 @@ function myFunc(){
                CurrentDate = new Date;
                var Hrs = CurrentDate.getHours();
                var Mins = CurrentDate.getMinutes();
-               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked' || $(this).find('td:nth-child(3)').html().trim() == 'Dropout') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
-               msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked' || $(this).find('td:nth-child(3)').html().trim() == 'Dropout') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
                if (dayidx == secondidx) blLast = true;
             }
         });
@@ -258,6 +263,8 @@ function myFunc(){
         }
         GM_setClipboard (msg);
         alert('Message copied!!!');
+        BackfromSession = true;
+        $('button:contains("Back")').get(0).click();
         return;
         }
         if(!matched)
