@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         Sanity Script August 2
 // @namespace    http://tampermonkey.net/
-// @version      4.70
+// @version      4.80
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
@@ -34,18 +34,19 @@ var OtherProgId = '';
 var OtherProgDt = '';
 var OtherProgMo = '';
 var OtherProgYr = '';
+var BackfromSession = false;
 //
-//  Sanity check script for 25 July - 31 July 2022 IECO
+//  Sanity check script for 22 - 28 August 2022 IECO
 //
-var InitiationDate = new Date(2022, 6, 31);
-var IniClass3Time = new Date(2022, 6, 31, 9, 30, 0);
-var SatsangWeekend = new Date(2022, 7, 7);
-var OverseasSessions =[3559,3569,3582];
-var InitSession = 3555;
+var InitiationDate = new Date(2022, 7, 28);
+var IniClass3Time = new Date(2022, 7, 28, 9, 30, 0);
+var SatsangWeekend = new Date(2022, 8, 4);
+var OverseasSessions =[];
+var InitSession = 3556;
 var array = [
-   [25, 26],
-   [27, 28],
-   [29, 30]
+   [22, 23],
+   [24, 25],
+   [26, 27]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -64,7 +65,6 @@ var myInt;
 
 function myFunc(){
     let text = $('table thead tr:first-child th:nth-child(1)').html().trim();
-    alert(text);
     let RollNumberYes = text.includes("Roll No");
     let SessionYes = text.includes("Session");
     if(RollNumberYes || SessionYes || (text = "Roll No.") || (text = "Session"))
@@ -88,6 +88,10 @@ function myFunc(){
         GM_setClipboard (msg);
         alert('Message copied!!!');
         return;
+        }
+        if (BackfromSession) {
+            BackfromSession = false;
+            return;
         }
         var TrIdx = 0;
         $( "table tbody tr" ).each(function() {
@@ -180,7 +184,7 @@ function myFunc(){
         {
         if (classId == OverseasSessions[idx])
         {
-        var TimeZone  = classDateZone.slice(1, classDateZone.indexOf('<br>'));
+        var TimeZone = classDateZone.slice(1, classDateZone.indexOf('<br>'));
         if (classDateZone.includes('<br>')) {
         msgTemp += 'Overseas IECO Particpant"&CHAR(10)&"' + TimeZone + '"&CHAR(10)&"' ;
         } else {
@@ -217,6 +221,7 @@ function myFunc(){
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollno');
         RegClsDay = sessionStorage.getItem('RegClsDay');
+        BackfromSession = false;
         var blLast = false;
         var lastSeen = '';
         var dayidx = -1;
@@ -247,8 +252,7 @@ function myFunc(){
                CurrentDate = new Date;
                var Hrs = CurrentDate.getHours();
                var Mins = CurrentDate.getMinutes();
-               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked' || $(this).find('td:nth-child(3)').html().trim() == 'Dropout') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx)
-               msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked' || $(this).find('td:nth-child(3)').html().trim() == 'Dropout') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
                if (dayidx == secondidx) blLast = true;
             }
         });
@@ -259,6 +263,8 @@ function myFunc(){
         }
         GM_setClipboard (msg);
         alert('Message copied!!!');
+        BackfromSession = true;
+        $('button:contains("Back")').get(0).click();
         return;
         }
         if(!matched)
