@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script November IECO
 // @namespace    http://tampermonkey.net/
-// @version      4.80
+// @version      4.90
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
