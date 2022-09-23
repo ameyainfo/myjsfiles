@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Sanity Script August 2
+// @name         Sanity Script November IECO
 // @namespace    http://tampermonkey.net/
 // @version      4.80
 // @description  try to take over the world!
@@ -37,17 +37,17 @@ var OtherProgMo = '';
 var OtherProgYr = '';
 var BackfromSession = false;
 //
-//  Sanity check script for 22 - 28 August 2022 IECO
+//  Sanity check script for 07 - 13 November 2022 IECO
 //
-var InitiationDate = new Date(2022, 7, 28);
-var IniClass3Time = new Date(2022, 7, 28, 9, 30, 0);
-var SatsangWeekend = new Date(2022, 8, 4);
-var OverseasSessions =[];
-var InitSession = 3556;
+var InitiationDate = new Date(2022, 10, 13);
+var IniClass3Time = new Date(2022, 10, 13, 9, 30, 0);
+var SatsangWeekend = new Date(2022, 10, 20);
+var OverseasSessions =[3811,3816,3823];
+var InitSession = 3808;
 var array = [
-   [22, 23],
-   [24, 25],
-   [26, 27]
+   [07, 08],
+   [09, 10],
+   [11, 12]
 ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
