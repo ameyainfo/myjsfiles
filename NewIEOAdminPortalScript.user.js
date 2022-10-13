@@ -206,7 +206,7 @@ function myFunc(){
         }
         var hr = classDate.substr(classDate.indexOf('<br>') + 4, 5);
 
-        msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 17) ? 'Evening' : 'Morning');
+        msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 12) ? 'Evening' : 'Morning');
         rollno = $(this).find('td:nth-child(1)').html().trim();
         sessionStorage.setItem('clicked', msgTemp);
         sessionStorage.setItem('rollno', rollno);
@@ -254,6 +254,13 @@ function myFunc(){
                var Hrs = CurrentDate.getHours();
                var Mins = CurrentDate.getMinutes();
                if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked' || $(this).find('td:nth-child(3)').html().trim() == 'Dropout') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+               switch ($(this).find('td:nth-child(3)').html().trim()) {
+                    Case "Joined":
+                    Case "Completed":
+                    Case "Revoked":
+                    Case "Dropout":
+                    if ($(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+               }
                if (dayidx == secondidx) blLast = true;
             }
         });
@@ -277,11 +284,6 @@ function myFunc(){
         alert('Message copied!!!');
         }
 }
-function SuperScript(i) {
-  var SupScpt = ["th ","st ","nd ","rd ","th ","th ","th ","th ","th ","th "];
-  var reminder = i % 10;
-  var SpScpt = SupScpt[reminder];
-  if (i > 10 && i < 14) SpScpt = "th";
-  i = SpScpt;
-  return i;
+function SuperScript(numb) {
+  return ((numb > 10 && numb < 14) || numb % 10 == 0 || numb % 10 > 3 ) ? "th" : numb % 10 == 1 ? "st" : numb % 10 == 2 ? "nd" : "rd";
 }
