@@ -259,7 +259,11 @@ function myFunc(){
                     Case "Completed":
                     Case "Revoked":
                     Case "Dropout":
-                    if ($(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+                          if ($(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+                    break;
+                    default:
+                          msg += ',"&CHAR(10)&"Sanity check @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins);
+                    break;     
                }
                if (dayidx == secondidx) blLast = true;
             }
