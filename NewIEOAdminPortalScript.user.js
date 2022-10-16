@@ -45,10 +45,10 @@ var SatsangWeekend = new Date(2022, 10, 20);
 var OverseasSessions =[3811,3816,3823];
 var InitSession = 3808;
 var array = [
-   [07, 08],
-   [09, 10],
+   [7, 8],
+   [9, 10],
    [11, 12]
-];
+   ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var prefix =['Mon/Tue Participant','Wed/Thu Participant','Fri/Sat Participant'];
@@ -253,17 +253,17 @@ function myFunc(){
                CurrentDate = new Date;
                var Hrs = CurrentDate.getHours();
                var Mins = CurrentDate.getMinutes();
-               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked' || $(this).find('td:nth-child(3)').html().trim() == 'Dropout') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+
                switch ($(this).find('td:nth-child(3)').html().trim()) {
-                    Case "Joined":
-                    Case "Completed":
-                    Case "Revoked":
-                    Case "Dropout":
+                    case "Joined":
+                    case "Completed":
+                    case "Revoked":
+                    case "Dropout":
                           if ($(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
                     break;
                     default:
-                          msg += ',"&CHAR(10)&"Sanity check @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins);
-                    break;     
+                          if (dayidx == secondidx) msg += ',"&CHAR(10)&"Sanity check @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins);
+                    break;
                }
                if (dayidx == secondidx) blLast = true;
             }
