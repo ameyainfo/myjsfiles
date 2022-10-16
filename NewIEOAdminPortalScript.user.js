@@ -260,7 +260,8 @@ function myFunc(){
                     case "Revoked":
                     case "Dropout":
                           if ($(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
-                    break;
+                          if ($(this).find('td:nth-child(5)').html().trim() == '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat record';                   
+                     break;
                     default:
                           if (dayidx == secondidx) msg += ',"&CHAR(10)&"Sanity check @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins);
                     break;
