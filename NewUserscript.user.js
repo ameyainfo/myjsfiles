@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name         Sanity Script November
+// @name         Sanity Script November IECO
 // @namespace    http://tampermonkey.net/
 // @version      4.90
 // @description  try to take over the world!
 // @author       You
-// @match        https://prs-admin.innerengineering.com/index?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
+// @match        https://prs-admin.innerengineering.com/index?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgifQ==
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=innerengineering.com
 // @grant        GM_setClipboard
 // @require https://code.jquery.com/jquery-1.8.3.min.js
@@ -45,10 +45,10 @@ var SatsangWeekend = new Date(2022, 10, 20);
 var OverseasSessions =[3811,3816,3823];
 var InitSession = 3808;
 var array = [
-   [07, 08],
-   [09, 10],
+   [7, 8],
+   [9, 10],
    [11, 12]
-];
+   ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var prefix =['Mon/Tue Participant','Wed/Thu Participant','Fri/Sat Participant'];
@@ -206,7 +206,7 @@ function myFunc(){
         }
         var hr = classDate.substr(classDate.indexOf('<br>') + 4, 5);
 
-        msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 17) ? 'Evening' : 'Morning');
+        msgTemp += hr + ' hrs ' + ((parseInt(classDate.substr(classDate.indexOf('<br>') + 4, 2), 10) > 12) ? 'Evening' : 'Morning');
         rollno = $(this).find('td:nth-child(1)').html().trim();
         sessionStorage.setItem('clicked', msgTemp);
         sessionStorage.setItem('rollno', rollno);
@@ -253,7 +253,18 @@ function myFunc(){
                CurrentDate = new Date;
                var Hrs = CurrentDate.getHours();
                var Mins = CurrentDate.getMinutes();
-               if(($(this).find('td:nth-child(3)').html().trim() == 'Joined' || $(this).find('td:nth-child(3)').html().trim() == 'Completed' || $(this).find('td:nth-child(3)').html().trim() == 'Revoked' || $(this).find('td:nth-child(3)').html().trim() == 'Dropout') && $(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+
+               switch ($(this).find('td:nth-child(3)').html().trim()) {
+                    case "Joined":
+                    case "Completed":
+                    case "Revoked":
+                    case "Dropout":
+                          if ($(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
+                    break;
+                    default:
+                          if (dayidx == secondidx) msg += ',"&CHAR(10)&"Sanity check @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins);
+                    break;
+               }
                if (dayidx == secondidx) blLast = true;
             }
         });
@@ -277,11 +288,6 @@ function myFunc(){
         alert('Message copied!!!');
         }
 }
-function SuperScript(i) {
-  var SupScpt = ["th ","st ","nd ","rd ","th ","th ","th ","th ","th ","th "];
-  var reminder = i % 10;
-  var SpScpt = SupScpt[reminder];
-  if (i > 10 && i < 14) SpScpt = "th";
-  i = SpScpt;
-  return i;
+function SuperScript(numb) {
+  return ((numb > 10 && numb < 14) || numb % 10 == 0 || numb % 10 > 3 ) ? "th" : numb % 10 == 1 ? "st" : numb % 10 == 2 ? "nd" : "rd";
 }
