@@ -119,6 +119,8 @@ function myFunc(){
         OtherProgDt = RegInitDt;
         OtherProgMo = RegInitMo;
         OtherProgYr = RegInitYr;
+        } else {
+        if(RegInitProgId == OtherProgId) RegInitProgId = 3800;
         }
         }
 
