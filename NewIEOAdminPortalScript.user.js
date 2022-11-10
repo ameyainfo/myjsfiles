@@ -103,6 +103,8 @@ function myFunc(){
         var classId = $(this).find('td:nth-child(2)').html().split('|')[0];
         var classDate = $(this).find('td:nth-child(2)').html().split('|')[1];
         var classDateZone = $(this).find('td:nth-child(2)').html().split('|')[2];
+        var RegStatus1 = $(this).find('td:nth-child(3)').html().split('Status')[1];
+        var RegStatus = RegStatus1.slice(RegStatus1.indexOf('</b>') + 5, RegStatus1.indexOf('<br>'));
         RegInitDate = $(this).find('td:nth-child(4)').html().split('|')[1];
         RegInitDt = RegInitDate.slice(9,11);
         RegInitMo = RegInitDate.slice(6,8);
@@ -119,12 +121,10 @@ function myFunc(){
         OtherProgDt = RegInitDt;
         OtherProgMo = RegInitMo;
         OtherProgYr = RegInitYr;
-        } else {
-        if(RegInitProgId == OtherProgId) RegInitProgId = 3800;
         }
         }
 
-        if( RegInitProgId == InitSession) {
+        if( RegInitProgId == InitSession && RegStatus == "Active") {
         matched = true;
         var dt = classDate.slice(classDate.indexOf('<br>') - 2, classDate.indexOf('<br>'));
         var RegClsDate = dt;
