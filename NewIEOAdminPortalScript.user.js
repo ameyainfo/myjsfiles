@@ -245,7 +245,7 @@ function myFunc(){
                 if ($(this).find('td:nth-child(1)').html().trim() == 'Session 99') {
                 msg += ',"&CHAR(10)&"Spl Satsang - ' + $(this).find('td:nth-child(3)').html().trim();
                 } else {
-                msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim();
+                if ((Satsang && dayidx > 1) || !Satsang) msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim();
                 }
                 //
                // Heartbeat detail is picked only for 'Joined' or 'Revoked' or 'Completed' status
