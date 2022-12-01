@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Sanity Script November IECO
+// @name         Sanity Script January 2023 IECO
 // @namespace    http://tampermonkey.net/
-// @version      4.92
+// @version      5.0
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9NYWluL2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgiLCJwYXJhbXMiOm51bGx9
@@ -37,17 +37,17 @@ var OtherProgMo = '';
 var OtherProgYr = '';
 var BackfromSession = false;
 //
-//  Sanity check script for 07 - 13 November 2022 IECO
+//  Sanity check script for 23 - 29 January 2023 IECO
 //
-var InitiationDate = new Date(2022, 10, 13);
-var IniClass3Time = new Date(2022, 10, 13, 9, 30, 0);
-var SatsangWeekend = new Date(2022, 10, 20);
-var OverseasSessions =[3811,3816,3823];
-var InitSession = 3808;
+var InitiationDate = new Date(2023, 0, 29);
+var IniClass3Time = new Date(2023, 0, 29, 9, 30, 0);
+var SatsangWeekend = new Date(2023, 1, 5);
+var OverseasSessions =[];
+var InitSession = 4006;
 var array = [
-   [7, 8],
-   [9, 10],
-   [11, 12]
+   [23, 24],
+   [25, 26],
+   [27, 28]
    ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
