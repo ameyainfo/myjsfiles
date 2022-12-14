@@ -37,7 +37,6 @@ var OtherProgMo = '';
 var OtherProgYr = '';
 var BackfromSession = false;
 //
-//
 //  Sanity check script for 23 - 29 January 2023 IECO
 //
 var InitiationDate = new Date(2023, 0, 29);
@@ -83,12 +82,14 @@ function myFunc(){
         if($('.card-header:contains("Participant Details")').parent().children('.card-body:contains("No record found")').length == 1){
         GM_setClipboard ("No Record Found");
         alert('Message copied!!!');
+        focusFunc();
         return;
         }
         if ($("table tbody tr td").length == 1) {
         msg = 'No IECO Record';
         GM_setClipboard (msg);
         alert('Message copied!!!');
+        focusFunc();
         return;
         }
         if (BackfromSession) {
@@ -233,6 +234,7 @@ function myFunc(){
         msg += '"&CHAR(10)&"No Sessions Data^' + rollno + '", "^")';
         GM_setClipboard (msg);
         alert('Message copied!!!');
+        focusFunc();
         return;
         }
         if (Satsang) secondidx = 4;
@@ -263,7 +265,7 @@ function myFunc(){
                     case "Revoked":
                     case "Dropout":
                           if ($(this).find('td:nth-child(5)').html().trim() != '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(5)').html().trim();
-                          if ($(this).find('td:nth-child(5)').html().trim() == '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat record';                   
+                          if ($(this).find('td:nth-child(5)').html().trim() == '-' && CurrentWeek && dayidx == secondidx) msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat record';
                      break;
                     default:
                           if (dayidx == secondidx) msg += ',"&CHAR(10)&"Sanity check @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins);
@@ -281,6 +283,7 @@ function myFunc(){
         alert('Message copied!!!');
         BackfromSession = true;
         $('button:contains("Back")').get(0).click();
+        setTimeout(focusFunc,3000);
         return;
         }
         if(!matched)
@@ -290,8 +293,12 @@ function myFunc(){
         msgTemp += OtherProgDt.toString() + SuperScript(OtherProgDt) + ' ' + monthName[parseInt(OtherProgMo)-1] + ' ' + OtherProgYr + '", "^")';
         GM_setClipboard (msgTemp);
         alert('Message copied!!!');
+        focusFunc();
         }
-}
-function SuperScript(numb) {
-  return ((numb > 10 && numb < 14) || numb % 10 == 0 || numb % 10 > 3 ) ? "th" : numb % 10 == 1 ? "st" : numb % 10 == 2 ? "nd" : "rd";
-}
+        }
+        function SuperScript(numb) {
+        return ((numb > 10 && numb < 14) || numb % 10 == 0 || numb % 10 > 3 ) ? "th" : numb % 10 == 1 ? "st" : numb % 10 == 2 ? "nd" : "rd";
+        }
+        function focusFunc() {
+        $('#participant').focus();
+        }
