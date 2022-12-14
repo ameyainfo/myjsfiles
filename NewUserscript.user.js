@@ -82,7 +82,7 @@ function myFunc(){
         if($('.card-header:contains("Participant Details")').parent().children('.card-body:contains("No record found")').length == 1){
         GM_setClipboard ("No Record Found");
         alert('Message copied!!!');
-           FocusFunc();
+        focusFunc();
         return;
         }
         if ($("table tbody tr td").length == 1) {
@@ -234,7 +234,7 @@ function myFunc(){
         msg += '"&CHAR(10)&"No Sessions Data^' + rollno + '", "^")';
         GM_setClipboard (msg);
         alert('Message copied!!!');
-        focucFunc();
+        focusFunc();
         return;
         }
         if (Satsang) secondidx = 4;
