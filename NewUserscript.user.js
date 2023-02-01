@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script January 2023 IECO
 // @namespace    http://tampermonkey.net/
-// @version      5.01
+// @version      5.02
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgiLCJwYXJhbXMiOm51bGx9
@@ -183,7 +183,7 @@ function myFunc(){
         secondidx = 3;
         }
         }
-        secondidx = 3;
+        secondidx = 5;
         Satsang = false;
         if (OverseasSessions.length != 0)
         {
