@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script January 2023 IECO
 // @namespace    http://tampermonkey.net/
-// @version      5.02
+// @version      5.03
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgiLCJwYXJhbXMiOm51bGx9
@@ -183,8 +183,6 @@ function myFunc(){
         secondidx = 3;
         }
         }
-        secondidx = 5;
-        Satsang = false;
         if (OverseasSessions.length != 0)
         {
         for(var idx = 0; idx < OverseasSessions.length; idx++)
@@ -239,7 +237,7 @@ function myFunc(){
         focusFunc();
         return;
         }
-        if (Satsang) secondidx = 4;
+        if (Satsang) secondidx = 6;
         $( "table tbody tr" ).each(function() {
             if(!blLast)
             {
@@ -250,7 +248,7 @@ function myFunc(){
                 if ($(this).find('td:nth-child(1)').html().trim() == 'Session 99') {
                 msg += ',"&CHAR(10)&"Spl Satsang - ' + $(this).find('td:nth-child(3)').html().trim();
                 } else {
-                if ((Satsang && dayidx > 1) || !Satsang) msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim();
+                if ((Satsang && dayidx > 1) || (Satsang && $( "table tbody tr" ).length < 5) || !Satsang) msg += ',"&CHAR(10)&"' + $(this).find('td:first-child').html().trim() + ' - ' + $(this).find('td:nth-child(3)').html().trim();
                 }
                 //
                // Heartbeat detail is picked only for 'Joined' or 'Revoked' or 'Completed' status
