@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Sanity Script January 2023 IECO
+// @name         Sanity Script March 2023 IECO
 // @namespace    http://tampermonkey.net/
-// @version      5.03
+// @version      5.10
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llY29zdXBwb3J0IiwiYWN0aW9uIjoiaW5kZXgiLCJwYXJhbXMiOm51bGx9
@@ -37,17 +37,17 @@ var OtherProgMo = '';
 var OtherProgYr = '';
 var BackfromSession = false;
 //
-//  Sanity check script for 23 - 29 January 2023 IECO
+//  Sanity check script for 13 - 19 March 2023 IECO
 //
-var InitiationDate = new Date(2023, 0, 29);
-var IniClass3Time = new Date(2023, 0, 29, 9, 30, 0);
-var SatsangWeekend = new Date(2023, 1, 5);
-var OverseasSessions =[];
-var InitSession = 4006;
+var InitiationDate = new Date(2023, 2, 29);
+var IniClass3Time = new Date(2023, 2, 19, 9, 30, 0);
+var SatsangWe1kend = new Date(2023, 2, 26);
+var OverseasSessions =[4285,4286,4287];
+var InitSession = 4272;
 var array = [
-   [23, 24],
-   [25, 26],
-   [27, 28]
+   [13, 14],
+   [15, 16],
+   [17, 18]
    ];
 
 var monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -237,7 +237,7 @@ function myFunc(){
         focusFunc();
         return;
         }
-        if (Satsang) secondidx = 6;
+        if (Satsang) secondidx = 4;
         $( "table tbody tr" ).each(function() {
             if(!blLast)
             {
