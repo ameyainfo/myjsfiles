@@ -41,7 +41,7 @@ var BackfromSession = false;
 //
 var InitiationDate = new Date(2023, 2, 29);
 var IniClass3Time = new Date(2023, 2, 19, 9, 30, 0);
-var SatsangWe1kend = new Date(2023, 2, 26);
+var SatsangWeekend = new Date(2023, 2, 26);
 var OverseasSessions =[4285,4286,4287];
 var InitSession = 4272;
 var array = [
