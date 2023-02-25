@@ -39,7 +39,7 @@ var BackfromSession = false;
 //
 //  Sanity check script for 13 - 19 March 2023 IECO
 //
-var InitiationDate = new Date(2023, 2, 29);
+var InitiationDate = new Date(2023, 2, 19);
 var IniClass3Time = new Date(2023, 2, 19, 9, 30, 0);
 var SatsangWeekend = new Date(2023, 2, 26);
 var OverseasSessions =[4285,4286,4287];
@@ -85,22 +85,18 @@ function myFunc(){
         focusFunc();
         return;
         }
-        if ($("table tbody tr td").length == 1) {
-        msg = 'No IECO Record';
-        GM_setClipboard (msg);
-        alert('Message copied!!!');
-        focusFunc();
-        return;
-        }
         if (BackfromSession) {
             BackfromSession = false;
             return;
         }
         var TrIdx = 0;
-        $( "table tbody tr" ).each(function() {
+        var IECOfound = false;
+        $( "table tbody tr").each(function() {
         if(!blLast)
         {
         msgTemp = '=SPLIT("';
+        if($(this).find("td").length > 4) {
+        IECOfound = true;
         RegInitProgId = $(this).find('td:nth-child(4)').html().split('|')[0];
         var classId = $(this).find('td:nth-child(2)').html().split('|')[0];
         var classDate = $(this).find('td:nth-child(2)').html().split('|')[1];
@@ -125,7 +121,6 @@ function myFunc(){
         OtherProgYr = RegInitYr;
         }
         }
-
         if( RegInitProgId == InitSession && RegStatus == "Active") {
         matched = true;
         var dt = classDate.slice(classDate.indexOf('<br>') - 2, classDate.indexOf('<br>'));
@@ -219,7 +214,14 @@ function myFunc(){
         $(this).find('td:last-child a:contains("Session Details")').get(0).click();
         }
         }
+        }
         });
+        if(!IECOfound) {
+        GM_setClipboard ("No IECO Record Found");
+        alert('Message copied!!!');
+        focusFunc();
+        return;
+        }
      }
      else
      {
@@ -279,11 +281,11 @@ function myFunc(){
         } else {
         msg += '^' + rollno + '", "^")';
         }
-        GM_setClipboard (msg);
-        alert('Message copied!!!');
         BackfromSession = true;
         $('button:contains("Back")').get(0).click();
-        setTimeout(focusFunc,3000);
+        GM_setClipboard (msg);
+        alert('Message copied!!!');
+        setTimeout(focusFunc,4000);
         return;
         }
         if(!matched)
