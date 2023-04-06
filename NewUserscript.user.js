@@ -43,7 +43,7 @@ var InitiationDate = new Date(2023, 4, 28);
 var IniClass3Time = new Date(2023, 4, 28, 9, 30, 0);
 var SatsangWeekend = new Date(2023, 5, 4);
 var OverseasSessions =[];
-var InitSession 4414;
+var InitSession = 4414;
 var array = [
    [22, 23],
    [24, 25],
