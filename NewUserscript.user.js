@@ -26,7 +26,6 @@ var myInt;
 function myFunc(){
     let text = $('table thead tr:first-child th:nth-child(1)').html().trim();
     let SessionYes = text.includes("Session");
-    alert(SessionYes)
     let RollNumberYes = text.includes("Roll No. | Reg Id");
     if(RollNumberYes || SessionYes)
     {
