@@ -28,82 +28,44 @@ var myInt;
 })();
 
 function myFunc(){
-    if($('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html() == 'Old IEO Support' && $('#searchEmail').val() != "")
-    {
-        if(jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() !== undefined)
+        clearInterval(myInt);
+        if($('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html() == 'Old IEO Support')
         {
-        var email = $('#searchEmail').val();
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
+        {
         msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Current Class: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '"'
-        } else
-        {
-        msg = "No Record is Available";
+        GM_setClipboard (msg);
+        alert('Message copied!!!');
+        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        setTimeout(focusFunc,2000);
         }
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID')
+        {
+        msg += 'No Data is available';
         GM_setClipboard (msg);
         alert('Message copied!!!');
-        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click()
+        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        setTimeout(focusFunc,2000);
+        }
+        }
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
+        {
+        sessionStorage.setItem('mailId',$('#searchEmail').val());
+        jQuery('a:contains("Old IEO Support")').click();
+        setTimeout(focusFunc,2500);
+        var mail = sessionStorage.getItem('mailId');
+        $('#searchEmail').val(mail);
         return;
-    } else
-    {
-    clearInterval(myInt);
-    if($('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html() == 'Old IEO Support')
-    {
-    if(jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() !== undefined)
-    {
-    msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Current Class: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
-    msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '"'
-    } else
-    {
-    msg = "No Record is Available";
-    }
-    GM_setClipboard (msg);
-    alert('Message copied!!!');
-    jQuery('a:contains("IEO Support"):not(:contains("Old"))').click()
-    return;
-    }
-    }
-    let text = $('table thead tr:first-child th:nth-child(1)').html().trim();
-    let RollNumberYes = text.includes("Roll No");
-    let SessionYes = text.includes("Session");
-    if(RollNumberYes || SessionYes)
-    {
-        clearInterval(myInt);
-    }
-    else
-    {
-        email = $('#searchEmail').val();
-        sessionStorage.setItem('mailId',email);
-        clearInterval(myInt);
-        jQuery('a:contains("Old IEO Support")').click()
-        email = sessionStorage.setItem('mailId');
-        $('#searchEmail').val(email);
-        return;
-    }
-    if(RollNumberYes)
-    {
-        var checkPage = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
-    if(checkPage === undefined)
-    {
-        msg = "No Data available in Table"
-        GM_setClipboard (msg);
-        alert('Message copied!!!');
-        clearInterval(myInt);
-        return;
-  //      var email = $('#searchEmail').val();
-  //      sessionStorage.setItem('mailId',email);
-  //      clearInterval(myInt);
-  //      jQuery('a:contains("Old IEO Support")').click()
-  //      var MailId = sessionStorage.getItem('mailId');
-  //      $('button:contains("Search")').click();
-  //      $('#searchEmail').val(MailId);
-  //      return;
-    }
-    msg = '=SPLIT("';
-    const initDate = new Date();
-    const currentDate = new Date();
-    var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
-    var langCode = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
-    var language = '';
+        }
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
+        {
+        msg = '=SPLIT("';
+        const initDate = new Date();
+        const currentDate = new Date();
+        var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
+        var langCode = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
+        var language = '';
     switch (langCode) {
     case 'EN':
          language = 'English';
@@ -151,11 +113,10 @@ function myFunc(){
     sessionStorage.setItem('rollnum', rollno);
     $('table tbody td:last-child a:contains("Session Details")').get(0).click();
      }
-     else
-     {
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
+        {
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollnum');
-        progDate = sessionStorage.getItem('pgmdat');
         var CurrentDate = new Date;
         var CurrentDay = new Date().getDay();
         var Hrs = CurrentDate.getHours();
@@ -184,10 +145,8 @@ function myFunc(){
         msg += '^' + rollno + '", "^")';
         GM_setClipboard (msg);
         alert('Message copied!!!');
-        clearInterval(myInt);
-        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click()
-        setTimeout(focusFunc,500);
-        return;
+        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        setTimeout(focusFunc,2000);
         }
         }
         function focusFunc() {
