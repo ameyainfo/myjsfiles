@@ -106,7 +106,7 @@ function myFunc(){
     initDate.setFullYear(parseInt(progYear),parseInt(progMonth)-1,parseInt(progDate));
     var dateDiff = initDate - currentDate;
     dateDiff /= 86400000;
-    if(dateDiff < 6 && dateDiff > -1){
+    if(dateDiff < 6 && dateDiff > -2){
     msg += 'Initiation (Current):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
     } else
     {
