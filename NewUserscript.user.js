@@ -42,7 +42,8 @@ function myFunc(){
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID')
         {
-        msg += '\nNo Data available for this email Id';
+        var email = sessionStorage.getItem('mailId');
+        msg = '="' + email +'"&CHAR(10)&"No Data available for this email Id"';
         GM_setClipboard (msg);
         alert("Participant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
@@ -110,7 +111,7 @@ function myFunc(){
     {
     msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
     }
-    msg += '&CHAR(10)&"City: ' + city + ',' + state + '"&CHAR(10)&"Current Step: ' + CurrentStep;
+    msg += '&CHAR(10)&"Current Step: ' + CurrentStep + '"&CHAR(10)&"City: ' + city + ',' + state;
     sessionStorage.setItem('clicked', msg);
     sessionStorage.setItem('rollnum', rollno);
     sessionStorage.setItem('name', firstName);      
