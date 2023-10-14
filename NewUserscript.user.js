@@ -36,13 +36,13 @@ function myFunc(){
         msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Current Class: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '"'
         GM_setClipboard (msg);
-        alert("Participant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
+        alert(jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + " " + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html() +"\nParticipant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID')
         {
-        msg += 'No Data is available';
+        msg += '\nNo Data available for this email Id';
         GM_setClipboard (msg);
         alert("Participant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
@@ -92,6 +92,7 @@ function myFunc(){
     case 'HI':
          language = 'Hindi';
 }
+    var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();        
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
     var city = jQuery("div:contains('Profile Information')").next().find('td:contains("City")').next().html();
     var state = jQuery("div:contains('Profile Information')").next().find('td:contains("State")').next().html();
@@ -112,12 +113,14 @@ function myFunc(){
     msg += '&CHAR(10)&"City: ' + city + ',' + state + '"&CHAR(10)&"Current Step: ' + CurrentStep;
     sessionStorage.setItem('clicked', msg);
     sessionStorage.setItem('rollnum', rollno);
+    sessionStorage.setItem('name', firstName);      
     $('table tbody td:last-child a:contains("Session Details")').get(0).click();
      }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollnum');
+        firstName = sessionStorage.getItem('name');    
         var CurrentDate = new Date;
         var CurrentDay = new Date().getDay();
         var Hrs = CurrentDate.getHours();
@@ -145,7 +148,7 @@ function myFunc(){
         });
         msg += '^' + rollno + '", "^")';
         GM_setClipboard (msg);
-        alert("Participant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
+        alert(firstName + "\nParticipant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
