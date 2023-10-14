@@ -145,7 +145,7 @@ function myFunc(){
         });
         msg += '^' + rollno + '", "^")';
         GM_setClipboard (msg);
-        alert("Participant' details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
+        alert('Participant details copied\nPaste this the Main Tracker Sheet\nCome back and click OK');
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
