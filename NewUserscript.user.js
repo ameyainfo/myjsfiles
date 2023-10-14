@@ -99,6 +99,7 @@ function myFunc(){
     var state = jQuery("div:contains('Profile Information')").next().find('td:contains("State")').next().html();
     var progId = $('table tbody td:nth-child(3)').html().split('|')[0];
     var progDetail = $('table tbody td:nth-child(3)').html().split('|')[3];
+    var oldProg = $('table tbody td:nth-child(3)').html().split('Old Program Details:</b> <br>')[1];        
     var progDate = progDetail.slice(9,11);
     var progMonth = progDetail.slice(6,8);
     var progYear = progDetail.slice(1,5);
@@ -114,14 +115,16 @@ function myFunc(){
     msg += '&CHAR(10)&"Current Step: ' + CurrentStep + '"&CHAR(10)&"City: ' + city + ',' + state;
     sessionStorage.setItem('clicked', msg);
     sessionStorage.setItem('rollnum', rollno);
-    sessionStorage.setItem('name', firstName);      
+    sessionStorage.setItem('name', firstName); 
+    sessionStorage.setItem('oldPgId', oldProg);        
     $('table tbody td:last-child a:contains("Session Details")').get(0).click();
      }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollnum');
-        firstName = sessionStorage.getItem('name');    
+        firstName = sessionStorage.getItem('name'); 
+        oldProg = sessionStorage.getItem('oldPgId');    
         var CurrentDate = new Date;
         var CurrentDay = new Date().getDay();
         var Hrs = CurrentDate.getHours();
@@ -147,6 +150,10 @@ function myFunc(){
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
         });
+        if(oldProg !== undefined)
+        {
+        msg += '"&CHAR(10)&CHAR(10)&"Old Program:"&CHAR(10)&"' + oldProg
+        }    
         msg += '^' + rollno + '", "^")';
         GM_setClipboard (msg);
         alert(firstName + "\nParticipant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
