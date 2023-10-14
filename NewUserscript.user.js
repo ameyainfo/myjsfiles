@@ -36,7 +36,7 @@ function myFunc(){
         msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Current Class: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '"'
         GM_setClipboard (msg);
-        alert("Participant' details copied\nPaste this the Main Tracker Sheet\nCome back and click OK);
+        alert("Participant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
@@ -44,7 +44,7 @@ function myFunc(){
         {
         msg += 'No Data is available';
         GM_setClipboard (msg);
-        alert("Participant' details copied\nPaste this the Main Tracker Sheet\nCome back and click OK);
+        alert("Participant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
@@ -145,7 +145,7 @@ function myFunc(){
         });
         msg += '^' + rollno + '", "^")';
         GM_setClipboard (msg);
-        alert('Participant details copied\nPaste this the Main Tracker Sheet\nCome back and click OK');
+        alert("Participant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
