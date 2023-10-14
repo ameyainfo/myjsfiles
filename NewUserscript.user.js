@@ -150,10 +150,10 @@ function myFunc(){
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
         });
-        if(oldProg !== undefined)
-        {
-        msg += '"&CHAR(10)&CHAR(10)&"Old Program:"&CHAR(10)&"' + oldProg
-        }    
+//        if(oldProg !== undefined)
+//        {
+//        msg += '"&CHAR(10)&CHAR(10)&"Old Program:"&CHAR(10)&"' + oldProg
+//        }    
         msg += '^' + rollno + '", "^")';
         GM_setClipboard (msg);
         alert(firstName + "\nParticipant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
