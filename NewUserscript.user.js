@@ -53,9 +53,10 @@ function myFunc(){
         {
         sessionStorage.setItem('mailId',$('#searchEmail').val());
         jQuery('a:contains("Old IEO Support")').click();
-        setTimeout(focusFunc,2500);
-        var mail = sessionStorage.getItem('mailId');
-        $('#searchEmail').val(mail);
+        setTimeout(focusFunc,1000);
+        msg = sessionStorage.getItem('mailId');
+        GM_setClipboard (msg);  
+        alert("Not match found in the New IEO.\nTo serch in the Old IEO,\nEnter the email id once again and click")
         return;
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
