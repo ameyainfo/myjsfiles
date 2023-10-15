@@ -33,7 +33,7 @@ function myFunc(){
         {
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
-        msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Current Class: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
+        msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '"'
         GM_setClipboard (msg);
         alert(jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + " " + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html() +"\nParticipant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
