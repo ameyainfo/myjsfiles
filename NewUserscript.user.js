@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.1
+// @version      6.20
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -88,15 +88,15 @@ function myFunc(){
          language = 'Marathi';
          break;
     case 'KN':
-         language = 'Kanada';
+         language = 'Kannada';
          break;
     case 'HI':
          language = 'Hindi';
 }
     var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();        
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
-    var city = jQuery("div:contains('Profile Information')").next().find('td:contains("City")').next().html();
-    var state = jQuery("div:contains('Profile Information')").next().find('td:contains("State")').next().html();
+//    var city = jQuery("div:contains('Profile Information')").next().find('td:contains("City")').next().html();
+//    var state = jQuery("div:contains('Profile Information')").next().find('td:contains("State")').next().html();
     var progId = $('table tbody td:nth-child(3)').html().split('|')[0];
     var progDetail = $('table tbody td:nth-child(3)').html().split('|')[3];
     var oldProg = $('table tbody td:nth-child(3)').html().split('Old Program Details:</b> <br>')[1];        
@@ -112,11 +112,16 @@ function myFunc(){
     {
     msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
     }
-    msg += '&CHAR(10)&"Current Step: ' + CurrentStep + '"&CHAR(10)&"City: ' + city + ',' + state;
+    msg += '&CHAR(10)&"Current Step: ' + CurrentStep + '"&CHAR(10)&;
+    var msgTemp ='';
+    if(oldProg !== undefined)
+    {
+    msgTemp = '"&CHAR(10)&CHAR(10)&"Old Program:"&CHAR(10)&"' + oldProg.slice(0,22);
+    }        
     sessionStorage.setItem('clicked', msg);
     sessionStorage.setItem('rollnum', rollno);
     sessionStorage.setItem('name', firstName); 
-    sessionStorage.setItem('oldPgId', oldProg);        
+    sessionStorage.setItem('oldPgId', msgTemp);        
     $('table tbody td:last-child a:contains("Session Details")').get(0).click();
      }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
@@ -149,12 +154,8 @@ function myFunc(){
         {
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
-        });
-//        if(oldProg !== undefined)
-//        {
-//        msg += '"&CHAR(10)&CHAR(10)&"Old Program:"&CHAR(10)&"' + oldProg
-//        }    
-        msg += '^' + rollno + '", "^")';
+        });    
+        msg += oldProg + '^' + rollno + '", "^")';
         GM_setClipboard (msg);
         alert(firstName + "\nParticipant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
