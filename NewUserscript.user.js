@@ -57,7 +57,7 @@ function myFunc(){
         setTimeout(focusFunc,1000);
         msg = sessionStorage.getItem('mailId');
         GM_setClipboard (msg);  
-        alert("Not match found in the New IEO.\nTo serch in the Old IEO,\nEnter the email id once again and click")
+        alert("No match found in the New IEO.\nTo serch in the Old IEO,\nClick Ok and in the Old IEO portal, enter the email id and Search again")
         return;
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
@@ -112,7 +112,7 @@ function myFunc(){
     {
     msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
     }
-    msg += '&CHAR(10)&"Current Step: ' + CurrentStep + '"&CHAR(10)&;
+    msg += '&CHAR(10)&"Current Step: ' + CurrentStep;
     var msgTemp ='';
     if(oldProg !== undefined)
     {
