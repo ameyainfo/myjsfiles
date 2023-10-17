@@ -57,7 +57,7 @@ function myFunc(){
         setTimeout(focusFunc,1000);
         msg = sessionStorage.getItem('mailId');
         GM_setClipboard (msg);  
-        alert("No match found in the New IEO.\nTo serch in the Old IEO,\nClick Ok and in the Old IEO portal, enter the email id and Search again")
+        alert("No match found in the New IEO.\nTo serch in the Old IEO, Click Ok\nIn the Old IEO portal, enter the email id and Search again")
         return;
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
