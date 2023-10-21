@@ -33,10 +33,11 @@ function myFunc(){
         {
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
-        msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
-        msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '"'
-        msg += jQuery("div:contains('Class Information')").next().find('td:contains("Email")').next().html()
-        msg += jQuery("div:contains('Class Information')").next().find('td:contains("Primary")').next().html()
+        msg = '=SPLIT("Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
+        msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '^'
+        msg += 'xxxxxx/' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() +'/';
+        var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
+        msg += secondary.slice(1,12) + '", "^")';
         GM_setClipboard (msg);
         alert(jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + " " + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html() +"\nParticipant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
@@ -58,7 +59,7 @@ function myFunc(){
         jQuery('a:contains("Old IEO Support")').click();
         setTimeout(focusFunc,1000);
         msg = sessionStorage.getItem('mailId');
-        GM_setClipboard (msg);  
+        GM_setClipboard (msg);
         alert("No match found in the New IEO.\nTo serch in the Old IEO, Click Ok\nIn the Old IEO portal, enter the email id and Search again")
         return;
         }
@@ -95,21 +96,23 @@ function myFunc(){
     case 'HI':
          language = 'Hindi';
 }
-    var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();        
+    var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
-    var email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
+    email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
     var phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
     var progId = $('table tbody td:nth-child(3)').html().split('|')[0];
     var progDetail = $('table tbody td:nth-child(3)').html().split('|')[3];
-    var oldProg = $('table tbody td:nth-child(3)').html().split('Old Program Details:</b> <br>')[1];        
+    var oldProg = $('table tbody td:nth-child(3)').html().split('Old Program Details:</b> <br>')[1];
     var progDate = progDetail.slice(9,11);
     var progMonth = progDetail.slice(6,8);
     var progYear = progDetail.slice(1,5);
     initDate.setFullYear(parseInt(progYear),parseInt(progMonth)-1,parseInt(progDate));
     var dateDiff = initDate - currentDate;
     dateDiff /= 86400000;
+    var curweek = 0;
     if(dateDiff < 6 && dateDiff > -2){
     msg += 'Initiation (Current):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
+    curweek = 1;
     } else
     {
     msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
@@ -119,23 +122,25 @@ function myFunc(){
     if(oldProg !== undefined)
     {
     msgTemp = '"&CHAR(10)&CHAR(10)&"Old Program:"&CHAR(10)&"' + oldProg.slice(0,22);
-    }        
+    }
     sessionStorage.setItem('clicked', msg);
     sessionStorage.setItem('rollnum', rollno);
-    sessionStorage.setItem('name', firstName); 
+    sessionStorage.setItem('name', firstName);
     sessionStorage.setItem('oldPgId', msgTemp);
     sessionStorage.setItem('mailId', email);
-    sessionStorage.setItem('phonenum', phone);        
+    sessionStorage.setItem('phonenum', phone);
+    sessionStorage.setItem('weekchk', curweek);
     $('table tbody td:last-child a:contains("Session Details")').get(0).click();
      }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollnum');
-        firstName = sessionStorage.getItem('name'); 
-        oldProg = sessionStorage.getItem('oldPgId');  
-        email = sessionStorage.getItem('email');
-        phone = sessionStorage.getItem('phonenum');    
+        firstName = sessionStorage.getItem('name');
+        oldProg = sessionStorage.getItem('oldPgId');
+        email = sessionStorage.getItem('mailId');
+        phone = sessionStorage.getItem('phonenum');
+        curweek = sessionStorage.getItem('weekchk');
         var CurrentDate = new Date;
         var CurrentDay = new Date().getDay();
         var Hrs = CurrentDate.getHours();
@@ -144,8 +149,8 @@ function myFunc(){
         $( "table tbody tr" ).each(function() {
         if($( "table tbody tr" ).length == 3)
      {
-         if (((trcount < 3 || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6) || (CurrentDay > 0 && CurrentDay < 6)) msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim() + ',' + $(this).find('td:nth-child(2)').html().trim() + ',' + $(this).find('td:nth-child(5)').html().trim()
-         if ((((trcount == 2 && (Hrs*100+Mins) < 930) || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6))
+         if (((trcount < 3 || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6) || (CurrentDay > 0 && CurrentDay < 6) || curweek == 0) msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim() + ',' + $(this).find('td:nth-child(2)').html().trim() + ',' + $(this).find('td:nth-child(5)').html().trim()
+         if ((((trcount == 2 && (Hrs*100+Mins) < 930) || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6 && curweek == 1))
          {
              if($(this).find('td:nth-child(7)').html().trim() != '-')
              {
@@ -160,7 +165,7 @@ function myFunc(){
         {
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
-        });    
+        });
         msg += oldProg + '^' + rollno + '/' + phone + '/' + email + '", "^")';
         GM_setClipboard (msg);
         alert(firstName + "\nParticipant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
