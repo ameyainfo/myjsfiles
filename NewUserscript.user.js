@@ -95,8 +95,8 @@ function myFunc(){
 }
     var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();        
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
-//    var city = jQuery("div:contains('Profile Information')").next().find('td:contains("City")').next().html();
-//    var state = jQuery("div:contains('Profile Information')").next().find('td:contains("State")').next().html();
+    var email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
+    var phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
     var progId = $('table tbody td:nth-child(3)').html().split('|')[0];
     var progDetail = $('table tbody td:nth-child(3)').html().split('|')[3];
     var oldProg = $('table tbody td:nth-child(3)').html().split('Old Program Details:</b> <br>')[1];        
@@ -121,7 +121,9 @@ function myFunc(){
     sessionStorage.setItem('clicked', msg);
     sessionStorage.setItem('rollnum', rollno);
     sessionStorage.setItem('name', firstName); 
-    sessionStorage.setItem('oldPgId', msgTemp);        
+    sessionStorage.setItem('oldPgId', msgTemp);
+    sessionStorage.setItem('mailId', email);
+    sessionStorage.setItem('phonenum', phone);        
     $('table tbody td:last-child a:contains("Session Details")').get(0).click();
      }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
@@ -129,7 +131,9 @@ function myFunc(){
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollnum');
         firstName = sessionStorage.getItem('name'); 
-        oldProg = sessionStorage.getItem('oldPgId');    
+        oldProg = sessionStorage.getItem('oldPgId');  
+        email = sessionStorage.getItem('email');
+        phone = sessionStorage.getItem('phonenum');    
         var CurrentDate = new Date;
         var CurrentDay = new Date().getDay();
         var Hrs = CurrentDate.getHours();
@@ -155,7 +159,7 @@ function myFunc(){
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
         });    
-        msg += oldProg + '^' + rollno + '", "^")';
+        msg += oldProg + '^' + rollno + '/' + phone + '/' + email + '", "^")';
         GM_setClipboard (msg);
         alert(firstName + "\nParticipant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
