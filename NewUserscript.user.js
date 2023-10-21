@@ -35,6 +35,8 @@ function myFunc(){
         {
         msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '"'
+        msg += jQuery("div:contains('Class Information')").next().find('td:contains("Email")').next().html()
+        msg += jQuery("div:contains('Class Information')").next().find('td:contains("Primary")').next().html()
         GM_setClipboard (msg);
         alert(jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + " " + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html() +"\nParticipant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
