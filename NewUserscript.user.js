@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Sanity Script 2023 - '04
+// @name         Sanity Script 2023 - '04 1230
 // @namespace    http://tampermonkey.net/
 // @version      6.20
 // @description  try to take over the world!
