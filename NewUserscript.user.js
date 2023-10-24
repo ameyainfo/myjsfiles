@@ -15,6 +15,7 @@
 
 var msg = '';
 var rollno = '';
+var count = 0;
 
 waitForKeyElements (".table-striped", myFunc);
 
@@ -39,7 +40,6 @@ function myFunc(){
         var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
         msg += secondary.slice(1,12) + '", "^")';
         GM_setClipboard (msg);
-        alert(jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + " " + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html() +"\nParticipant's details copied\nPaste this the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
@@ -48,7 +48,6 @@ function myFunc(){
         var email = sessionStorage.getItem('mailId');
         msg = '="' + email +'"&CHAR(10)&"No Data available for this email Id"';
         GM_setClipboard (msg);
-        alert("Participant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
@@ -56,12 +55,10 @@ function myFunc(){
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
         sessionStorage.setItem('mailId',$('#searchEmail').val());
-        jQuery('a:contains("Old IEO Support")').click();
+//        jQuery('a:contains("Old IEO Support")').click();
         setTimeout(focusFunc,1000);
         msg = sessionStorage.getItem('mailId');
-        GM_setClipboard (msg);
-        alert("No match found in the New IEO.\nTo serch in the Old IEO, Click Ok\nIn the Old IEO portal, enter the email id and Search again")
-        return;
+        $('#searchEmail').val();
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
@@ -101,6 +98,7 @@ function myFunc(){
     email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
     var phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
     var progId = $('table tbody td:nth-child(3)').html().split('|')[0];
+    var progRegn = $('table tbody td:nth-child(3)').html().split('|')[1];
     var progDetail = $('table tbody td:nth-child(3)').html().split('|')[3];
     var oldProg = $('table tbody td:nth-child(3)').html().split('Old Program Details:</b> <br>')[1];
     var progDate = progDetail.slice(9,11);
@@ -110,12 +108,13 @@ function myFunc(){
     var dateDiff = initDate - currentDate;
     dateDiff /= 86400000;
     var curweek = 0;
-    if(dateDiff < 6 && dateDiff > -2){
+    if(dateDiff < 6 && dateDiff > -2 && progRegn == 'IN'){
     msg += 'Initiation (Current):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
     curweek = 1;
     } else
     {
-    msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
+    if(progRegn.trim() != 'IN') msg += 'Initiation (Overseas):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"';
+    if(progRegn.trim() == 'IN') msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"';
     }
     msg += '&CHAR(10)&"Current Step: ' + CurrentStep;
     var msgTemp ='';
@@ -130,7 +129,9 @@ function myFunc(){
     sessionStorage.setItem('mailId', email);
     sessionStorage.setItem('phonenum', phone);
     sessionStorage.setItem('weekchk', curweek);
-    $('table tbody td:last-child a:contains("Session Details")').get(0).click();
+    count = count + 1;
+    sessionStorage.setItem('countId',count);
+    if(count == 1) $('table tbody td:last-child a:contains("Session Details")').get(0).click();
      }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
@@ -166,13 +167,18 @@ function myFunc(){
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
         });
-        msg += oldProg + '^' + rollno + '/' + phone + '/' + email + '", "^")';
+        if( rollno.length == 5 ) msg += oldProg + '^ ' + rollno + '/' + phone + '/' + email + '", "^")';
+        if( rollno.length == 6 ) msg += oldProg + '^' + rollno + '/' + phone + '/' + email + '", "^")';
         GM_setClipboard (msg);
-        alert(firstName + "\nParticipant's details copied\nPaste this in the Main Tracker Sheet\nCome back and click OK");
-        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        count = 0;
+        sessionStorage.setItem('countId',count);
+        setTimeout(delayClick,500);
         setTimeout(focusFunc,2000);
         }
         }
         function focusFunc() {
         $('#searchEmail').focus();
+        }
+        function delayClick() {
+        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         }
