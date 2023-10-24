@@ -32,6 +32,8 @@ function myFunc(){
         clearInterval(myInt);
         if($('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html() == 'Old IEO Support')
         {
+        count = 0;
+        sessionStorage.setItem('countId',count);   
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
         msg = '=SPLIT("Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
@@ -55,10 +57,11 @@ function myFunc(){
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
         sessionStorage.setItem('mailId',$('#searchEmail').val());
-//        jQuery('a:contains("Old IEO Support")').click();
-        setTimeout(focusFunc,1000);
-        msg = sessionStorage.getItem('mailId');
-        $('#searchEmail').val();
+        jQuery('a:contains("Old IEO Support")').click();
+        setTimeout(setValue,1000);
+        count = count + 1;
+        sessionStorage.setItem('countId',count);
+        if(count == 1) setTimeout(searchClick,1000);
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
@@ -181,4 +184,11 @@ function myFunc(){
         }
         function delayClick() {
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        }
+        function setValue() {
+        msg = sessionStorage.getItem('mailId');
+        document.getElementById('searchEmail').value = msg;
+        }
+        function searchClick() {
+        jQuery('button:contains("Search")').click();
         }
