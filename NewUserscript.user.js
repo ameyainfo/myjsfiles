@@ -33,7 +33,7 @@ function myFunc(){
         if($('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html() == 'Old IEO Support')
         {
         count = 0;
-        sessionStorage.setItem('countId',count);   
+        sessionStorage.setItem('countId',count);
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
         msg = '=SPLIT("Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
@@ -56,12 +56,22 @@ function myFunc(){
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
+        if($( "table tbody tr" ).length == 1)
+        {
         sessionStorage.setItem('mailId',$('#searchEmail').val());
+        sessionStorage.setItem('phone',$('#searchPhone').val());
         jQuery('a:contains("Old IEO Support")').click();
         setTimeout(setValue,1000);
         count = count + 1;
         sessionStorage.setItem('countId',count);
         if(count == 1) setTimeout(searchClick,1000);
+        }
+        msg = '="Multiple entries for ' + $('#searchPhone').val() + '"&CHAR(10)'
+        $( "table tbody tr" ).each(function() {
+        msg += '&CHAR(10)&"' + $(this).find('td:nth-child(2)').html().trim() +'"';
+        });
+        GM_setClipboard (msg);
+        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
@@ -69,9 +79,10 @@ function myFunc(){
         const initDate = new Date();
         const currentDate = new Date();
         var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
-        var langCode = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
+        var langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
+        var langInit = $('table tbody td:nth-child(3)').html().split('|')[2];
         var language = '';
-    switch (langCode) {
+    switch (langInit.trim()) {
     case 'EN':
          language = 'English';
          break;
@@ -96,6 +107,32 @@ function myFunc(){
     case 'HI':
          language = 'Hindi';
 }
+    var IEOlang = '';
+    switch (langIEO.trim()) {
+    case 'EN':
+         IEOlang = 'English';
+         break;
+    case 'TA':
+         IEOlang = 'Tamil';
+         break;
+    case 'TE':
+         IEOlang = 'Telugu';
+         break;
+    case 'BN':
+         IEOlang = 'Bengali';
+         break;
+    case 'ML':
+         IEOlang = 'Malayalam';
+         break;
+    case 'MR':
+         IEOlang = 'Marathi';
+         break;
+    case 'KN':
+         IEOlang = 'Kannada';
+         break;
+    case 'HI':
+         IEOlang = 'Hindi';
+}
     var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
     email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
@@ -118,6 +155,10 @@ function myFunc(){
     {
     if(progRegn.trim() != 'IN') msg += 'Initiation (Overseas):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"';
     if(progRegn.trim() == 'IN') msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"';
+    }
+    if(langIEO != langInit.trim())
+    {
+    msg += '&CHAR(10)&"(IEO Language: ' + IEOlang + ')"';
     }
     msg += '&CHAR(10)&"Current Step: ' + CurrentStep;
     var msgTemp ='';
@@ -186,8 +227,10 @@ function myFunc(){
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         }
         function setValue() {
-        msg = sessionStorage.getItem('mailId');
-        document.getElementById('searchEmail').value = msg;
+        var mail = sessionStorage.getItem('mailId');
+        document.getElementById('searchEmail').value = mail;
+        var mobile = sessionStorage.getItem('phone');
+        document.getElementById('searchPhone').value = mobile;
         }
         function searchClick() {
         jQuery('button:contains("Search")').click();
