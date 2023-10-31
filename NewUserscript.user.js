@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.20
+// @version      6.21
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -149,7 +149,7 @@ function myFunc(){
     var dateDiff = initDate - currentDate;
     dateDiff /= 86400000;
     var curweek = 0;
-    if(dateDiff < 6 && dateDiff > -2 && progRegn == 'IN'){
+    if(dateDiff < 6 && dateDiff > -2 && progRegn.trim() == 'IN'){
     msg += 'Initiation (Current):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"'
     curweek = 1;
     } else
