@@ -145,6 +145,7 @@ function myFunc(){
     var progMonth = progDetail.slice(6,8);
     var progYear = progDetail.slice(1,5);
     initDate.setFullYear(parseInt(progYear),parseInt(progMonth)-1,parseInt(progDate));
+            msg += initDate;
     var dateDiff = initDate - currentDate;
     dateDiff /= 86400000;
     var curweek = 0;
