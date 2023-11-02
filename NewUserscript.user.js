@@ -37,7 +37,7 @@ function myFunc(){
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
         msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
-        msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html()
+        msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() +' ^'
         var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
         msg += '^' + secondary.slice(1,12);
         msg += ' ^' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() +'"';    
