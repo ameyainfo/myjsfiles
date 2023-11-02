@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.21
+// @version      6.22
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -36,11 +36,11 @@ function myFunc(){
         sessionStorage.setItem('countId',count);
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
-        msg = '=SPLIT("Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
+        msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + '^'
-        msg += 'xxxxxx/' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() +'/';
+        msg += ' ^' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() +'^';
         var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
-        msg += secondary.slice(1,12) + '", "^")';
+        msg += secondary.slice(1,12) + '"';
         GM_setClipboard (msg);
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
@@ -75,7 +75,7 @@ function myFunc(){
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
-        msg = '=SPLIT("';
+        msg = '="';
         const initDate = new Date();
         const currentDate = new Date();
         var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
@@ -212,8 +212,7 @@ function myFunc(){
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
         });
-        if( rollno.length == 5 ) msg += oldProg + '^ ' + rollno + '/' + phone + '/' + email + '", "^")';
-        if( rollno.length == 6 ) msg += oldProg + '^' + rollno + '/' + phone + '/' + email + '", "^")';
+        msg += oldProg + '^' + rollno + '^' + phone + '^' + email + '"';
         GM_setClipboard (msg);
         count = 0;
         sessionStorage.setItem('countId',count);
