@@ -37,18 +37,20 @@ function myFunc(){
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
         msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
-        msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() +' ^'
+        msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + ' ^ '
         var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
         msg += '^' + secondary.slice(1,12);
-        msg += ' ^' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() +'"';    
+        msg += '^' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() +'"';
         GM_setClipboard (msg);
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID')
         {
-        var email = sessionStorage.getItem('mailId');
-        msg = '="' + email +'"&CHAR(10)&"No Data available for this email Id"';
+        var emailId = sessionStorage.getItem('mailId');
+        if(emailId != '' ) msg = '="' + emailId +'"&CHAR(10)&"No Data available for this email Id"';
+        var phoneId = sessionStorage.getItem('phone');
+        if(phoneId != '' ) msg = '="' + phoneId +'"&CHAR(10)&"No Data available for this phone number"';
         GM_setClipboard (msg);
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
@@ -64,14 +66,16 @@ function myFunc(){
         setTimeout(setValue,1000);
         count = count + 1;
         sessionStorage.setItem('countId',count);
-        if(count == 1) setTimeout(searchClick,1000);
-        }
+        if(count == 1) setTimeout(searchClick,1500);
+        } else
+        {
         msg = '="Multiple entries for ' + $('#searchPhone').val() + '"&CHAR(10)'
         $( "table tbody tr" ).each(function() {
         msg += '&CHAR(10)&"' + $(this).find('td:nth-child(2)').html().trim() +'"';
         });
         GM_setClipboard (msg);
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        }
         }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
