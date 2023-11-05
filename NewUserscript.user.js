@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.22
+// @version      6.23
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -77,15 +77,58 @@ function myFunc(){
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         }
         }
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Step Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
+        {
+        var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
+        var langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
+        var language = '';
+        switch (langIEO.trim()) {
+        case 'EN':
+         language = 'English';
+         break;
+         case 'TA':
+         language = 'Tamil';
+         break;
+         case 'TE':
+         language = 'Telugu';
+         break;
+         case 'BN':
+         language = 'Bengali';
+         break;
+         case 'ML':
+         language = 'Malayalam';
+         break;
+         case 'MR':
+         language = 'Marathi';
+         break;
+         case 'KN':
+         language = 'Kannada';
+         break;
+         case 'HI':
+         language = 'Hindi';
+}
+        var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();
+        var lastName = jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html();
+        rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
+        email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
+        var phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
+        msg = '="' + firstName + ' ' + lastName +'"';
+        msg += '&CHAR(10)&"' + language + ' Current Step: ' + CurrentStep + '"&CHAR(10)&"No Record Found';
+        msg += '^' + rollno + '^' + phone +'^' + email + '"'
+        count = count + 1;
+        sessionStorage.setItem('countId',count);
+        GM_setClipboard (msg);
+        if(count == 1) jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        }
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
         msg = '="';
         const initDate = new Date();
         const currentDate = new Date();
-        var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
-        var langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
-        var langInit = $('table tbody td:nth-child(3)').html().split('|')[2];
-        var language = '';
+        CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
+        langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
+        langInit = $('table tbody td:nth-child(3)').html().split('|')[2];
+        language = '';
     switch (langInit.trim()) {
     case 'EN':
          language = 'English';
@@ -137,10 +180,10 @@ function myFunc(){
     case 'HI':
          IEOlang = 'Hindi';
 }
-    var firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();
+    firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
     email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
-    var phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
+    phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
     var progId = $('table tbody td:nth-child(3)').html().split('|')[0];
     var progRegn = $('table tbody td:nth-child(3)').html().split('|')[1];
     var progDetail = $('table tbody td:nth-child(3)').html().split('|')[3];
@@ -187,7 +230,7 @@ function myFunc(){
         rollno = sessionStorage.getItem('rollnum');
         firstName = sessionStorage.getItem('name');
         oldProg = sessionStorage.getItem('oldPgId');
-        email = sessionStorage.getItem('mailId');
+        var email = sessionStorage.getItem('mailId');
         phone = sessionStorage.getItem('phonenum');
         curweek = sessionStorage.getItem('weekchk');
         var CurrentDate = new Date;
