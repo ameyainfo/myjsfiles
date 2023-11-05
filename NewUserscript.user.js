@@ -127,7 +127,7 @@ function myFunc(){
         const currentDate = new Date();
         CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
         langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
-        langInit = $('table tbody td:nth-child(3)').html().split('|')[2];
+        var langInit = $('table tbody td:nth-child(3)').html().split('|')[2];
         language = '';
     switch (langInit.trim()) {
     case 'EN':
