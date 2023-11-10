@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.23
+// @version      6.24
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -220,6 +220,7 @@ function myFunc(){
     sessionStorage.setItem('mailId', email);
     sessionStorage.setItem('phonenum', phone);
     sessionStorage.setItem('weekchk', curweek);
+    sessionStorage.setItem('lang', language);        
     count = count + 1;
     sessionStorage.setItem('countId',count);
     if(count == 1) $('table tbody td:last-child a:contains("Session Details")').get(0).click();
@@ -233,6 +234,7 @@ function myFunc(){
         var email = sessionStorage.getItem('mailId');
         phone = sessionStorage.getItem('phonenum');
         curweek = sessionStorage.getItem('weekchk');
+        language = sessionStorage.getItem('lang');    
         var CurrentDate = new Date;
         var CurrentDay = new Date().getDay();
         var Hrs = CurrentDate.getHours();
@@ -258,7 +260,7 @@ function myFunc(){
         msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
         }
         });
-        msg += oldProg + '^' + rollno + '^' + phone + '^' + email + '"';
+        msg += oldProg + '^' + rollno + '^' + phone + '^' + email + '^' + language + '"';
         GM_setClipboard (msg);
         count = 0;
         sessionStorage.setItem('countId',count);
