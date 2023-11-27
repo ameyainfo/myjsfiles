@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.24
+// @version      6.25
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -220,7 +220,7 @@ function myFunc(){
     sessionStorage.setItem('mailId', email);
     sessionStorage.setItem('phonenum', phone);
     sessionStorage.setItem('weekchk', curweek);
-    sessionStorage.setItem('lang', language);        
+    sessionStorage.setItem('lang', language);
     count = count + 1;
     sessionStorage.setItem('countId',count);
     if(count == 1) $('table tbody td:last-child a:contains("Session Details")').get(0).click();
@@ -234,7 +234,7 @@ function myFunc(){
         var email = sessionStorage.getItem('mailId');
         phone = sessionStorage.getItem('phonenum');
         curweek = sessionStorage.getItem('weekchk');
-        language = sessionStorage.getItem('lang');    
+        language = sessionStorage.getItem('lang');
         var CurrentDate = new Date;
         var CurrentDay = new Date().getDay();
         var Hrs = CurrentDate.getHours();
@@ -244,21 +244,30 @@ function myFunc(){
         if($( "table tbody tr" ).length == 3)
      {
          if (((trcount < 3 || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6) || (CurrentDay > 0 && CurrentDay < 6) || curweek == 0) msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim() + ',' + $(this).find('td:nth-child(2)').html().trim() + ',' + $(this).find('td:nth-child(5)').html().trim()
-         if ((((trcount == 2 && (Hrs*100+Mins) < 930) || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6 && curweek == 1))
+         if ((((trcount == 2 && $(this).find('td:nth-child(5)').html().trim() == 'Dropout') || (trcount == 2 && (Hrs*100+Mins) < 930) || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6 && curweek == 1))
          {
+             if($(this).find('td:nth-child(5)').html().trim() != 'Allowed' && $(this).find('td:nth-child(5)').html().trim() != 'Not Allowed' && $(this).find('td:nth-child(5)').html().trim() != 'No Show') {
              if($(this).find('td:nth-child(7)').html().trim() != '-')
              {
-                 msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(7)').html().trim();
-             } else
-             {
-                 msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat Record';
+             if($(this).find('td:nth-child(5)').html().trim() == 'Dropout' || $(this).find('td:nth-child(5)').html().trim() == 'Revoked') {
+             var HBhour = $(this).find('td:nth-child(7)').html().split('minutes')[0];
+             var HBmin = HBhour.split('hours,')[1];
+             var HBtemp = HBhour.split('hours,')[0];
+             HBhour = HBtemp.split('days,')[1];
+             var hrDropout = Hrs - parseInt(HBhour);
+             var mnDropout = Mins - parseInt(HBmin);
+             var minuteDropout = parseInt(HBhour) * 60 + parseInt(HBmin);
+                if(mnDropout < 0) {
+                mnDropout = mnDropout + 60;
+                hrDropout = hrDropout - 1;
+                }
+             msg += ',"&CHAR(10)&"' + $(this).find('td:nth-child(5)').html().trim() + ' @ ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) + ' (' + minuteDropout + ' minutes back)'
+             } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(7)').html().trim(); }
+             } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat Record'; }
              }
-         }
+             }
          trcount = trcount +1;
-        } else
-        {
-        msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim();
-        }
+        } else { msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim(); }
         });
         msg += oldProg + '^' + rollno + '^' + phone + '^' + email + '^' + language + '"';
         GM_setClipboard (msg);
