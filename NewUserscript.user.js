@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.25
+// @version      6.26
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -36,7 +36,8 @@ function myFunc(){
         sessionStorage.setItem('countId',count);
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
-        msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
+        msg = '="' + jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + ' ' + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html();
+        msg += '"&CHAR(10)&CHAR(10)&"Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + ' ^ '
         var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
         msg += '^' + secondary.slice(1,12);
@@ -113,7 +114,7 @@ function myFunc(){
         email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
         var phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
         msg = '="' + firstName + ' ' + lastName +'"';
-        msg += '&CHAR(10)&"' + language + ' Current Step: ' + CurrentStep + '"&CHAR(10)&"No Record Found';
+        msg += '&CHAR(10)&"' + language + ' Current Step: ' + CurrentStep + '"&CHAR(10)&"No IEO Record Found';
         msg += '^' + rollno + '^' + phone +'^' + email + '"'
         count = count + 1;
         sessionStorage.setItem('countId',count);
@@ -181,6 +182,7 @@ function myFunc(){
          IEOlang = 'Hindi';
 }
     firstName = jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html();
+    lastName = jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html();
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
     email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
     phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
@@ -221,6 +223,7 @@ function myFunc(){
     sessionStorage.setItem('phonenum', phone);
     sessionStorage.setItem('weekchk', curweek);
     sessionStorage.setItem('lang', language);
+    sessionStorage.setItem('name', firstName + " " + lastName);
     count = count + 1;
     sessionStorage.setItem('countId',count);
     if(count == 1) $('table tbody td:last-child a:contains("Session Details")').get(0).click();
@@ -269,7 +272,7 @@ function myFunc(){
          trcount = trcount +1;
         } else { msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim(); }
         });
-        msg += oldProg + '^' + rollno + '^' + phone + '^' + email + '^' + language + '"';
+        msg += oldProg + '^' + rollno + '^' + phone + '^' + email + '^' + language + '^' + firstName + '"';
         GM_setClipboard (msg);
         count = 0;
         sessionStorage.setItem('countId',count);
