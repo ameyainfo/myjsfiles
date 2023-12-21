@@ -1,4 +1,4 @@
-f// ==UserScript==
+// ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
 // @version      6.26
