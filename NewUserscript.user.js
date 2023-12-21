@@ -1,4 +1,4 @@
-// ==UserScript==
+f// ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
 // @version      6.26
@@ -94,7 +94,7 @@ function myFunc(){
          language = 'Telugu';
          break;
          case 'BN':
-         language = 'Bengali';
+         language = 'Bangla';
          break;
          case 'ML':
          language = 'Malayalam';
@@ -141,7 +141,7 @@ function myFunc(){
          language = 'Telugu';
          break;
     case 'BN':
-         language = 'Bengali';
+         language = 'Bangla';
          break;
     case 'ML':
          language = 'Malayalam';
@@ -167,7 +167,7 @@ function myFunc(){
          IEOlang = 'Telugu';
          break;
     case 'BN':
-         IEOlang = 'Bengali';
+         IEOlang = 'Bangla';
          break;
     case 'ML':
          IEOlang = 'Malayalam';
