@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.26
+// @version      6.27
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -260,11 +260,11 @@ function myFunc(){
              var hrDropout = Hrs - parseInt(HBhour);
              var mnDropout = Mins - parseInt(HBmin);
              var minuteDropout = parseInt(HBhour) * 60 + parseInt(HBmin);
-                if(mnDropout < 0) {
-                mnDropout = mnDropout + 60;
-                hrDropout = hrDropout - 1;
-                }
-             msg += ',"&CHAR(10)&"' + $(this).find('td:nth-child(5)').html().trim() + ' @ ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) + ' (' + minuteDropout + ' minutes back)'
+             if(mnDropout < 0) {
+             mnDropout = mnDropout + 60;
+             hrDropout = hrDropout - 1;
+             }
+             msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' (' + $(this).find('td:nth-child(5)').html().trim() + ' ' +minuteDropout + ' minutes back @ ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) +')'
              } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(7)').html().trim(); }
              } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat Record'; }
              }
