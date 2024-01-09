@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.27
+// @version      6.28
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -202,8 +202,13 @@ function myFunc(){
     curweek = 1;
     } else
     {
-    if(progRegn.trim() != 'IN') msg += 'Initiation (Overseas):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"';
-    if(progRegn.trim() == 'IN') msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '"';
+    if(progRegn.trim() != 'IN') msg += 'Initiation (Overseas):"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '^';
+    if(progRegn.trim() == 'IN') msg += 'Initiation:"&CHAR(10)&"' + progId.trim() + ' ' + language + ' ' + progDate + '-' + progMonth + '-' + progYear + '^';
+    msg += rollno + '^' + phone + '^' + email + '^' + language + '^' + firstName + ' ' + lastName + '"';
+    GM_setClipboard (msg);
+    setTimeout(delayClick,1000);
+    setTimeout(focusFunc,1000);
+    return;
     }
     if(langIEO != langInit.trim())
     {
