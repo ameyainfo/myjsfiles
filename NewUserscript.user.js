@@ -62,7 +62,7 @@ function myFunc(){
          case 'HI':
          language = 'Hindi';
 }    
-        msg = '="&CHAR(10)&"Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ language + '"'
+        msg = '="Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ language + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + ' ^ '
         var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
         msg += '^' + secondary.slice(1,12);
