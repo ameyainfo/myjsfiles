@@ -121,14 +121,14 @@ function myFunc(){
         GM_setClipboard (msg);
         if(count == 1) jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         }
-        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No. | Reg Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IEO Support')
         {
         msg = '="';
         const initDate = new Date();
         const currentDate = new Date();
         CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
         langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
-        var langInit = $('table tbody td:nth-child(3)').html().split('|')[2];
+        var langInit = $('table tbody td:nth-child(4)').html().split('|')[2];
         language = '';
     switch (langInit.trim()) {
     case 'EN':
@@ -186,10 +186,10 @@ function myFunc(){
     rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
     email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
     phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
-    var progId = $('table tbody td:nth-child(3)').html().split('|')[0];
-    var progRegn = $('table tbody td:nth-child(3)').html().split('|')[1];
-    var progDetail = $('table tbody td:nth-child(3)').html().split('|')[3];
-    var oldProg = $('table tbody td:nth-child(3)').html().split('Old Program Details:</b> <br>')[1];
+    var progId = $('table tbody td:nth-child(4)').html().split('|')[0];
+    var progRegn = $('table tbody td:nth-child(4)').html().split('|')[1];
+    var progDetail = $('table tbody td:nth-child(4)').html().split('|')[3];
+    var oldProg = $('table tbody td:nth-child(4)').html().split('Old Program Details:</b> <br>')[1];
     var progDate = progDetail.slice(9,11);
     var progMonth = progDetail.slice(6,8);
     var progYear = progDetail.slice(1,5);
