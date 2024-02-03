@@ -36,12 +36,37 @@ function myFunc(){
         sessionStorage.setItem('countId',count);
         if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Payment Type')
         {
-        msg = '="' + jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + ' ' + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html();
-        msg += '"&CHAR(10)&CHAR(10)&"Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html() + '"'
+        var language = '';
+        switch (jQuery("div:contains('Profile Information')").next().find('td:contains("Language")').next().html()) {
+        case 'EN':
+         language = 'English';
+         break;
+         case 'TA':
+         language = 'Tamil';
+         break;
+         case 'TE':
+         language = 'Telugu';
+         break;
+         case 'BN':
+         language = 'Bangla';
+         break;
+         case 'ML':
+         language = 'Malayalam';
+         break;
+         case 'MR':
+         language = 'Marathi';
+         break;
+         case 'KN':
+         language = 'Kannada';
+         break;
+         case 'HI':
+         language = 'Hindi';
+}    
+        msg = '="&CHAR(10)&"Not Registered for the New IEO"&CHAR(10)&CHAR(10)&"Old IEO"&CHAR(10)&"Language: '+ language + '"'
         msg += '&CHAR(10)&"Current Class: '+ jQuery("div:contains('Class Information')").next().find('td:contains("Current Class")').next().html() + ' ^ '
         var secondary = jQuery("div:contains('Contact Information')").next().find('td:contains("Secondary")').next().html()
         msg += '^' + secondary.slice(1,12);
-        msg += '^' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() +'"';
+        msg += '^' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() + '^ ^' + jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + ' ' + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html()+'"';
         GM_setClipboard (msg);
         jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
@@ -82,7 +107,7 @@ function myFunc(){
         {
         var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
         var langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
-        var language = '';
+        language = '';
         switch (langIEO.trim()) {
         case 'EN':
          language = 'English';
@@ -113,9 +138,8 @@ function myFunc(){
         rollno = jQuery("div:contains('Profile Information')").next().find('td:contains("Roll No")').next().html();
         email = jQuery("div:contains('Profile Information')").next().find('td:contains("Email")').next().html();
         var phone = jQuery("div:contains('Profile Information')").next().find('td:contains("Primary")').next().html();
-        msg = '="' + firstName + ' ' + lastName +'"';
-        msg += '&CHAR(10)&"' + language + ' Current Step: ' + CurrentStep + '"&CHAR(10)&"No IEO Record Found';
-        msg += '^' + rollno + '^' + phone +'^' + email + '"'
+        msg = '="' + language + ' Current Step: ' + CurrentStep + '"&CHAR(10)&"No IEO Record Found';
+        msg += '^' + rollno + '^' + phone +'^' + email + '^' + language + '^' + firstName + ' ' + lastName + '"';
         count = count + 1;
         sessionStorage.setItem('countId',count);
         GM_setClipboard (msg);
