@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.28
+// @version      6.29
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -254,7 +254,7 @@ function myFunc(){
          if (((trcount < 3 || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6) || (CurrentDay > 0 && CurrentDay < 6) || curweek == 0) msg += '"&CHAR(10)&"' + $(this).find('td:nth-child(1)').html().trim() + ',' + $(this).find('td:nth-child(2)').html().trim() + ',' + $(this).find('td:nth-child(5)').html().trim()
          if ((((trcount == 2 && $(this).find('td:nth-child(5)').html().trim() == 'Dropout') || (trcount == 2 && (Hrs*100+Mins) < 930) || (trcount == 3 && (Hrs*100+Mins) > 929)) && CurrentDay == 0) || (trcount == 1 && CurrentDay == 6 && curweek == 1))
          {
-             if($(this).find('td:nth-child(5)').html().trim() != 'Allowed' && $(this).find('td:nth-child(5)').html().trim() != 'Not Allowed' && $(this).find('td:nth-child(5)').html().trim() != 'No Show') {
+             if($(this).find('td:nth-child(5)').html().trim() != 'Allowed' && $(this).find('td:nth-child(5)').html().trim() != 'Not-allowed' && $(this).find('td:nth-child(5)').html().trim() != 'No-show') {
              if($(this).find('td:nth-child(7)').html().trim() != '-')
              {
              if($(this).find('td:nth-child(5)').html().trim() == 'Dropout' || $(this).find('td:nth-child(5)').html().trim() == 'Revoked') {
