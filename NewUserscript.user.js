@@ -293,7 +293,13 @@ function myFunc(){
              mnDropout = mnDropout + 60;
              hrDropout = hrDropout - 1;
              }
-             msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' (' + $(this).find('td:nth-child(5)').html().trim() + ' ' +minuteDropout + ' minutes back @ ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) +')'
+             if (hrDropout < 0 ) {hrDropout = 24 + hrDropout}
+             if (trcount == 1 && CurrentDay == 0) {
+             msg += ' (Yesterday at ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) +' hrs)'
+             } else
+             {
+             msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' (' + $(this).find('td:nth-child(5)').html().trim() + ' ' + (parseInt(HBhour) > 0 ? HBhour + ' hours and ' : '') + HBmin + ' minutes back at ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) +' hrs)'
+             }
              } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(7)').html().trim(); }
              } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat Record'; }
              }
