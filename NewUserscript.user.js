@@ -298,7 +298,7 @@ function myFunc(){
              msg += ' (Yesterday at ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) +' hrs)'
              } else
              {
-             msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' (' + $(this).find('td:nth-child(5)').html().trim() + ' ' + (parseInt(HBhour) > 0 ? HBhour + ' hours and ' : '') + HBmin + ' minutes back at ' + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) +' hrs)'
+             msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' (' + $(this).find('td:nth-child(5)').html().trim() + ' ' + (parseInt(HBhour) > 1 ? HBhour + ' hours ' : (parseInt(HBhour) > 0 ? HBhour + ' hour ' : '')) + (parseInt(HBhour) + parseInt(HBmin) == parseInt(HBhour) ? '' : 'and ')+ (parseInt(HBmin) > 1 ? HBmin + ' minutes back at ' : (parseInt(HBmin) == 1 ? HBmin + ' minute back at ' : '')) + (hrDropout.toString().length == 1 ? '0' + hrDropout : hrDropout) + ':' + (mnDropout.toString().length == 1 ? '0' + mnDropout : mnDropout) +' hrs)'
              }
              } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - ' + $(this).find('td:nth-child(7)').html().trim(); }
              } else { msg += ',"&CHAR(10)&"Heartbeat @ ' + (Hrs.toString().length == 1 ? '0' + Hrs : Hrs) + ':' + (Mins.toString().length == 1 ? '0' + Mins : Mins) + ' - No Heartbeat Record'; }
