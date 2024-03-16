@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sanity Script 2023 - '04
 // @namespace    http://tampermonkey.net/
-// @version      6.30
+// @version      6.31
 // @description  try to take over the world!
 // @author       You
 // @match        https://prs-admin.innerengineering.com/?kdr=eyJyb3V0ZSI6IkFwcC9QUlNNYW5hZ2VtZW50L2llb3N1cHBvcnQiLCJhY3Rpb24iOiJpbmRleCIsInBhcmFtcyI6bnVsbH0=
@@ -68,21 +68,22 @@ function myFunc(){
         msg += '^' + secondary.slice(1,12);
         msg += '^' + jQuery("div:contains('Contact Information')").next().find('td:contains("Email")').next().html() + '^ ^' + jQuery("div:contains('Profile Information')").next().find('td:contains("First Name")').next().html() + ' ' + jQuery("div:contains('Profile Information')").next().find('td:contains("Last Name")').next().html()+'"';
         GM_setClipboard (msg);
-        jQuery('a:contains("IE 7 Steps Support")').click();
+        jQuery('a:contains("Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
-        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID')
+        }
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html() == 'Old IEO Support')
         {
         var emailId = sessionStorage.getItem('mailId');
         if(emailId != '' ) msg = '="' + emailId +'"&CHAR(10)&"No Data available for this email Id"';
         var phoneId = sessionStorage.getItem('phone');
         if(phoneId != '' ) msg = '="' + phoneId +'"&CHAR(10)&"No Data available for this phone number"';
         GM_setClipboard (msg);
-        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        jQuery('a:contains("Support"):not(:contains("Old"))').click();
         setTimeout(focusFunc,2000);
         }
-        }
-        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IE 7 Steps Support')
+        if ($('#searchEmail').val() != "" || $('#searchPhone').val() != "" || $('#searchPartId').val() != "") {
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'ID' && $('.breadcrumb').find('.breadcrumb-item:nth-child(1)').html()== 'IE 7 Steps')
         {
         if($( "table tbody tr" ).length == 1)
         {
@@ -100,10 +101,10 @@ function myFunc(){
         msg += '&CHAR(10)&"' + $(this).find('td:nth-child(2)').html().trim() +'"';
         });
         GM_setClipboard (msg);
-        jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
+        jQuery('a:contains("Support"):not(:contains("Old"))').click();
         }
         }
-        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Step Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IE 7 Steps Support')
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Step Id' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IE 7 Steps')
         {
         var CurrentStep = jQuery("div:contains('User Course Progress')").next().find('td:contains("Current Step")').next().html();
         var langIEO = jQuery("div:contains('User Course Progress')").next().find('td:contains("Language")').next().html();
@@ -143,9 +144,9 @@ function myFunc(){
         count = count + 1;
         sessionStorage.setItem('countId',count);
         GM_setClipboard (msg);
-        if(count == 1) jQuery('a:contains("IE 7 Steps Support")').click();
+        if(count == 1) jQuery('a:contains("IEO Support"):not(:contains("Old"))').click();
         }
-        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IE 7 Steps Support')
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Roll No' && $('.breadcrumb').find('.breadcrumb-item:nth-child(1)').html()== 'IE 7 Steps')
         {
         msg = '="';
         const initDate = new Date();
@@ -256,8 +257,9 @@ function myFunc(){
     count = count + 1;
     sessionStorage.setItem('countId',count);
     if(count == 1) $('table tbody td:last-child a:contains("Session Details")').get(0).click();
-     }
-        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(3)').html()== 'IE 7 Steps Support')
+    }
+    }
+        if($('table thead tr:first-child th:nth-child(1)').html().trim() == 'Session' && $('.breadcrumb').find('.breadcrumb-item:nth-child(1)').html()== 'IE 7 Steps')
         {
         msg = sessionStorage.getItem('clicked');
         rollno = sessionStorage.getItem('rollnum');
@@ -319,7 +321,7 @@ function myFunc(){
         $('#searchEmail').focus();
         }
         function delayClick() {
-        jQuery('a:contains("IE 7 Steps Support")').click();
+        jQuery('a:contains("Support"):not(:contains("Old"))').click();
         }
         function setValue() {
         var mail = sessionStorage.getItem('mailId');
